@@ -3,6 +3,8 @@
         "cstdio": "cpp",
         "cstddef": "cpp",
         "cstring": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "cstdint": "cpp",
+        "iostream": "cpp"
     }
 }

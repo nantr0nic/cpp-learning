@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<analyzerinfo hash="2892191155322887154">
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;iostream&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;iostream&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="game_stats.cpp" line="4" column="0"/>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;shieldsUp&apos; is assigned a value that is never used." verbose="Variable &apos;shieldsUp&apos; is assigned a value that is never used." cwe="563" file0="game_stats.cpp">
+            <location file="game_stats.cpp" line="19" column="15"/>
+            <symbol>shieldsUp</symbol>
+        </error>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl file="game_stats.cpp" functionName="main" lineNumber="7"/>
+    <functioncall functionName="true"/>
+  </FileInfo>
+</analyzerinfo>
