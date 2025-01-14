@@ -1,0 +1,37 @@
+DISCUSSION QUESTIONS
+1. What kinds of things would be difficult to program without loops?
+2. What are the advantages and disadvantages of the switch statement
+versus a series of if statements?
+3. When might you omit a break statement from the end of a case in a
+switch statement?
+4. When should you use a while loop over a do loop?
+5. Describe your favorite game in terms of the game loop. Is the game loop
+a good fit?
+
+---------
+
+1. A program that looks for prime numbers in a given range. Games. A program
+    that manipulates values in a data table.
+
+2. Advantage of 'switch' over a series of 'if' statements:
+    If you are writing a (simple) calculator with 4 functions, then the code would be more
+    readable using 'switch' because there are 4 mutually exclusive cases. In a situation where
+    the user can pick between 6 menu options, for instance, you could put all 6 options under
+    a single switch statement and call a function for each option from each case.
+
+   Disadvantage of 'switch' over a series of 'if' statements:
+    If you have a clear mathematical or logical relation between variables, then a series of 
+    'if/else if/else' statements would be more readable and appropriate. For example, in the
+    number guessing game it is clearer to use "if" statements to test for greater than / lesser than
+    / equal to, etc.
+
+3. When the 'choice' matches a case but you want the code to continue through subsequent cases.
+
+4. I believe it is stylistically usually preferable; however, 'do' executes its block at least
+    once before testing the concluding 'while' condition. If you want the block to be executed
+    only if the condition is true (thereby allowing the block to not be executed at all), then 
+    use a 'while' loop instead of a 'do'.
+
+5. I don't have a favorite game. The game I'm currently playing is an RPG game and it initializes
+    a distinct combat cycle where each character attacks on a timer, therefore it does utilize 
+    a game loop logic that concludes with the death of all party or enemy members.

@@ -14,7 +14,7 @@ int main() {
         cout << "2 - Normal\n";
         cout << "3 - Hard\n\n";
 
-        int choice;
+        int choice; 
         cout << "Choice: ";
         cin >> choice;
 
