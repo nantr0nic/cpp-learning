@@ -1,0 +1,23 @@
+2. What’s wrong with the following code?
+
+for (int i = 0; i <= phrase.size(); ++i)
+{
+    cout << "Character at position " << i << " is: " << phrase[i] << endl;
+}
+ GAME = 0123
+ phrase.size() = 4
+    ANSWER: "<=" should be a simple less than, because phrase.size() will return
+    an integer that is 1 above the index boundary for phrase. (Index begins at 0,
+    size() begins at 1)
+
+
+3. What’s wrong with the following code?
+
+const int ROWS = 2;
+const int COLUMNS = 3;
+char board[COLUMNS][ROWS] = { {’O’, ’X’, ’O’},
+                              {’ ’, ’X’, ’X’} };
+
+    ANSWER: COLUMNS and ROWS should be switched around because as it is written
+    the multidimensional array is board[3][2] whereas the initialized array provides
+    a total of board[2][3]
