@@ -15,7 +15,6 @@ int main() {
 
     vector<string> games;
 
-    vector<string>::iterator myIterator;
     vector<string>::const_iterator iter;
 
     int running = 1;
