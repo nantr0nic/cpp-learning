@@ -21,20 +21,23 @@
    ```
 4. You would use a constant pointer to a constant when you do not want the pointer to change neither the memory address to which it points nor the value to which it points. I think this is the same as a constant reference -- which would be the preferable method in most cases excluding the return of a function. A situation where you could use a constant pointer to a constant is in a displaying the minimum elements in a heads up display. Say you have a HUD with a quick-inventory window where you want 6 spaces to be displayed even if they are empty, you could pass a constant pointer to a constant to a function that displays the slots. You want the function to display the slots without altering the number or contents of the slots.
    ```cpp
+   #include <iostream>
    #include <string>
    #include <vector>
    //prototype declartion
-   void displaySlots(const string* const pSlots);
+   void displaySlots(const vector<string>* const pSlots, size_t size);
    // in main()...
-   vector<string> slots[5] = {"sword", "shield", "potion", "empty", "empty", "empty"};
-   //later
-   displaySlots(&slots);
-   // after return 0;
-   void displaySlots(const string* const pSlots) {
-    for (i = 0; i < 6; ++i) {
-        cout << (*pSlots)[i];
-    }
-    }
+   int main() {
+        vector<string> slots = {"sword", "shield", "potion", "empty", "empty", "empty"};
+        displaySlots(&slots, slots.size());
+        return 0;
+   }
+   void displaySlots(const vector<string>* const pSlots, size_t size) {
+        for (size_t i = 0; i < size; ++i) {
+            cout << (*pSlots)[i] << " ";
+        }
+        cout << endl;
+   }
    ```
 5. An example of a non-constant pointer to a non-constant object would be a regular pointer pointing to a string object. Say you have a party system where you could have betwen 0 and 3 party members and you want a pointer to point to the 2nd party member's name. This pointer would be re-assigned depending on who is 2nd, and that player could also change their name -- thus the object would be non-constant.
    ```cpp
