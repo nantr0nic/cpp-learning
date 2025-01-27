@@ -1,0 +1,16 @@
+# Discussion Questions
+1. What are the advantages and disadvantages of procedural programming?
+2. What are the advantages and disadvantages of object-oriented
+programming?
+3. Are accessor member functions a sign of poor class design? Explain.
+4. How are constant member functions helpful to a game programmer?
+5. When is it a good idea to calculate an object’s attribute on the fly rather
+than storing it as a data member?
+---
+### My Answers:
+
+1. The advantages of procedural programming are that it allows you to write short code for specific tasks without having to abstract to classes/objects. If you have a specific set of straight-forward tasks to accomplish then procedural programming is sufficient and can be easier to understand/read. A major disadvantage is when you are modeling several of the same thing (e.g. bank accounts, alien spaceships, particles) the procedural-programming flow can become difficult to maintain, understand (for the next programmer), and handling many objects can become inefficient (e.g. needing to initialize data for each object [probably a set of data in an array]). Using OOP makes this type of modeling much easier.
+2. The advantages of OOP is (in C++) its access control feature, manageability, efficiency at modeling many of the same type of thing (as in the answer above). Your main function can keep a pretty clear flow and easy-to-understand logic that shows how the program functions as a whole. The disadvantages are that it can increase room for error (e.g. mishandling public/private access) that isn't present in procedural programming; it can be overly complex for simple tasks where you don't need to model multiple of the same thing. The Critter Caretaker program is one such example -- however, by using OOP you allow the possibility of easily adding multiple critters to the game. This type of addition would be more difficult with procedural programming.
+3. Some consider accessor member functions a sign of poor design -- these individuals say that this practice "goes against the idea of encapsulation." They suggest you "should write classes with member functions that provide the client with all of the functionality it could need, eliminating the client's need to access a specific data member." However, accessor member functions, by providing controlled access to private data members, can be useful when working with non-essential data members.
+4. Constant member functions are helpful to a game programmer because they allow retrieving data without risking modifying it (say to an illegal value). For example, if you need a function that returns the amount of ammo a weapon has remaining, you could make this a constant member function of a weapon class. Defining a member function as constant also makes your intentions clear to others working on the same code.
+5. "On the fly calculation" can be efficient for simple calculations. This is especially the case when there is only one way the attribute is changed. If it is hunger being affected by the passage of time then this would be a preferable practice. If it is a player's health that can be affected by a number of different enemies with a variety of weapons that cause different damage, then a data member is definitely preferable.
