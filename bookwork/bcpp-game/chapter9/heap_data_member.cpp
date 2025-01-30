@@ -9,15 +9,15 @@ using namespace std;
 class Critter
 {
     public:
-        Critter(const string& name = "", int age = 0);
-        ~Critter();                         //destructor prototype
-        Critter(const Critter& c);          //copy constructor prototype
-        Critter& operator=(const Critter& c);      //overloaded assignment op
-        void Greet() const;
+    Critter(const string& name = "", int age = 0);
+    ~Critter();                         //destructor prototype
+    Critter(const Critter& c);          //copy constructor prototype
+    Critter& operator=(const Critter& c);      //overloaded assignment op
+    void Greet() const;
 
     private:
-        string* m_pName;
-        int m_Age;
+    string* m_pName;            //needs to be deleted (its on the heap)
+    int m_Age;                  //doesn't need to be deleted (its on the stack)
 };
 
 Critter::Critter(const string& name, int age) {
@@ -85,7 +85,8 @@ void testCopyConstructor(Critter aCopy) {
 void testAssignmentOp() {
     Critter crit1("crit1", 7);
     Critter crit2("crit2", 9);
-    crit1 = crit2;
+    //crit1 = crit2;
+    crit1.operator=(crit2);
     crit1.Greet();
     crit2.Greet();
     cout << endl;
