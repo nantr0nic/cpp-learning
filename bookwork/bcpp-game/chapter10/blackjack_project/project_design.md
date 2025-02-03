@@ -3,7 +3,9 @@
 This author does a good job of demonstrating pre-planning practices before starting a (relatively) larger coding project. I'm reproducing portions of this pre-planning exercise for posterity, as well as for future reference when planning my own projects. This is from all from the book.
 ---
 ```
-Before you start coding a project with multiple classes, it is helpful to map them out on paper. You might make a list and include a brief description of each class. [This table] shows my first pass at such a list for the Blackjack game.
+Before you start coding a project with multiple classes, it is helpful to map them out on paper.
+You might make a list and include a brief description of each class. [This table] shows my first
+pass at such a list for the Blackjack game.
 ```
 
 |**Class**       |**Base Class**|**Description**|
