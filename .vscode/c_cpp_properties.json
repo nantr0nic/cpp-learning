@@ -1,15 +1,16 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Linux/gcc",
             "includePath": [
                 "${workspaceFolder}/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "linux-clang-x64"
+            "cppStandard": "c++20",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerArgs": ["-Wall", "-Wextra", "-Wnarrowing", "-O2"]
         }
     ],
     "version": 4

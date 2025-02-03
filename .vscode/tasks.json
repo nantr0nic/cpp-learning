@@ -5,6 +5,10 @@
             "label": "C/C++: g++ build active file",
             "command": "/usr/bin/g++",
             "args": [
+                "-Wall",
+                "-Wextra",
+                "-Wnarrowing",
+                "-O2",
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
