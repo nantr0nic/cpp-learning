@@ -5,6 +5,7 @@
         "cstring": "cpp",
         "chrono": "cpp",
         "cstdint": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "algorithm": "cpp"
     }
 }

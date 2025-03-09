@@ -13,11 +13,5 @@ int main()
         cout << "Character: " << c << " / Number: " << i << "\n";
         ++i;
     }
-
-    for (i = 65; i < 123; ++i)
-    {
-        char c = i;
-        cout << "Character: " << c << " / Number: " << i << "\n";
-    }
     return 0;
 }

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
+using std::cout, std::vector, std::string;
 
 int main()
 {
@@ -28,6 +28,7 @@ int main()
         cout << z << '\n';
     }
     cout << "Size of string vector is: " << s.size();
+
     return 0;
 }
 
