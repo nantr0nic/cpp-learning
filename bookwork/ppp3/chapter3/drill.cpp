@@ -1,3 +1,10 @@
+/*
+1. Program prompts the user for a length (value + unit) in cm, m, in, or ft.
+2. Program checks if unit is legal, if it is, then
+3. Converts value to CM (if needed) and then
+4. Keeps track of smallest and largest values entered, amount of entries made,
+    their total sum, and lists the entries made while the program is running.
+*/
 #include <iostream>
 #include <string>
 #include <vector>
@@ -69,6 +76,8 @@ int main()
     return 0;
 }
 
+// I know these are "magic constants" but these should be mostly familiar
+// so I'll save the space and keep these
 double convToCm(double x, const string& unit)
 {
     double j = 0;
