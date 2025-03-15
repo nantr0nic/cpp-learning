@@ -1,0 +1,14 @@
+# Begame
+---
+## 1.0
+Some kind of text-based roguelike with a very simple dungeon ASCII map.
+Use as a way to practice stuff learned in C++ book. 
+
+- player is melee fighter
+- go through dungeons and fight enemies for rewards
+- use rewards to level up before next dungeon
+- try to make a basic ascii map
+
+## 2.0
+ - add weapons/buffs
+ - expand map + add a town, maybe follow Kevin's dungeon spread idea

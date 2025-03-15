@@ -1,0 +1,113 @@
+DISCUSSION QUESTIONS
+1. Why should a game programmer use the STL?
+2. What are the advantages of a vector over an array?
+3. What types of game objects might you store with a vector?
+4. How do performance characteristics of a container type affect the
+decision to use it?
+5. Why is program planning important?
+
+----
+
+1. The STL is a robust library of algorithims, iterators, containers, and more. They
+    have been improved upon and made efficient/fast. They are standard methods. Without
+    the STL, a programmer would need to code their own (probably inferior) methods.
+
+2. Vectors are dynamic whereas arrays are not. Vectors are compatible with STL algorithms
+    and iterators out-of-the-box, whereas C-style arrays require additional methods.
+    Vectors are more "flexible" than arrays.
+
+3. You could store any type of list with a vector: a player's inventory, items in a shop,
+    names of players in a party. You could also store numerical values such as the 
+    values of items in a shop, etc. (Though I suspect something like 'map' might be more
+    appropriate.)
+
+4. A container's performance characteristics become relevant, for instance, during more
+    computationally-intensive loops (during combat, for example) as opposed to a player re-organizing their inventory while idle. 
+
+5. Program planning is important because it can establish the order of operations within
+    code. It can map out the logic of game loops and help plan the order of variable
+    manipulations. It can save time and frustration, perhaps saving time from having to
+    re-edit code to succesfully implement game features.
+
+---------
+
+Here is what Perplexity added:
+
+I'd be happy to evaluate your discussion question answers for you. Let's go through them one by one:
+
+## Question 1: Why should a game programmer use the STL?
+
+Your answer is good and touches on key points. You correctly mention that the STL provides efficient and well-tested implementations of algorithms and data structures. However, we can expand on this a bit:
+
+**Improved Answer:**
+Game programmers should use the STL (Standard Template Library) for several reasons:
+
+1. **Efficiency**: The STL provides highly optimized implementations of common data structures and algorithms.
+2. **Reliability**: These components have been extensively tested and debugged by the C++ community.
+3. **Productivity**: Using pre-built STL components saves time and reduces the likelihood of errors compared to writing custom implementations.
+4. **Standardization**: STL is part of the C++ standard, ensuring portability across different platforms and compilers.
+5. **Performance**: Many STL components are designed with game development performance needs in mind.
+
+## Question 2: What are the advantages of a vector over an array?
+
+Your answer covers some important points, but we can enhance it:
+
+**Improved Answer:**
+Vectors offer several advantages over arrays:
+
+1. **Dynamic sizing**: Vectors can grow or shrink at runtime, unlike fixed-size arrays.
+2. **Automatic memory management**: Vectors handle memory allocation and deallocation automatically.
+3. **STL compatibility**: Vectors work seamlessly with STL algorithms and iterators.
+4. **Bounds checking**: Vectors provide methods like `at()` for safe, bounds-checked access.
+5. **Size information**: Vectors keep track of their size, accessible through the `size()` method.
+6. **Additional functionality**: Vectors offer methods like `push_back()`, `pop_back()`, and `clear()` for easy manipulation.
+
+## Question 3: What types of game objects might you store with a vector?
+
+Your answer provides good examples. Let's expand on it:
+
+**Improved Answer:**
+Vectors can store various game objects, including:
+
+1. **Entity collections**: Players, enemies, NPCs, or any game entities.
+2. **Inventory systems**: Items in a player's inventory or shop stock.
+3. **Particle systems**: Particles for visual effects.
+4. **Game state**: Levels, checkpoints, or save states.
+5. **AI behavior trees**: Sequences of AI actions or decisions.
+6. **Physics objects**: Collision shapes or rigid bodies.
+7. **Audio**: Sound effects or music tracks to be played.
+8. **UI elements**: Buttons, menu items, or HUD components.
+
+## Question 4: How do performance characteristics of a container type affect the decision to use it?
+
+Your answer touches on the importance of performance in certain game scenarios. Let's elaborate:
+
+**Improved Answer:**
+Performance characteristics of containers significantly influence their usage in game development:
+
+1. **Access time**: Containers with O(1) access time (like vectors) are preferred for frequently accessed data.
+2. **Insertion/deletion speed**: For frequently modified collections, containers with efficient insertion/deletion (like linked lists) might be chosen.
+3. **Memory usage**: In memory-constrained environments, more compact containers might be preferred.
+4. **Iteration speed**: For containers that are frequently iterated over, contiguous memory storage (like in vectors) can improve cache performance.
+5. **Sorting requirements**: If data needs to be kept sorted, containers like sets or maps might be more appropriate.
+6. **Concurrency**: Some containers perform better in multi-threaded scenarios.
+
+The choice depends on the specific requirements of the game feature and the frequency of operations performed on the container.
+
+## Question 5: Why is program planning important?
+
+Your answer covers some good points. Let's enhance it further:
+
+**Improved Answer:**
+Program planning is crucial in game development for several reasons:
+
+1. **Architecture design**: It helps in designing a robust and scalable game architecture.
+2. **Resource management**: Proper planning ensures efficient use of system resources (CPU, memory, GPU).
+3. **Code organization**: It aids in structuring code logically, improving readability and maintainability.
+4. **Performance optimization**: Planning allows for identifying and addressing potential performance bottlenecks early.
+5. **Feature integration**: It helps in smoothly integrating various game features and systems.
+6. **Time and cost efficiency**: Good planning can save time and reduce development costs by minimizing rework.
+7. **Team coordination**: In a team setting, planning ensures all members understand the project structure and their roles.
+8. **Debugging and testing**: A well-planned program is easier to debug and test systematically.
+
+Overall, your answers demonstrate a good understanding of the topics. With some expansion and more specific examples, they could be even stronger. Keep up the good work!

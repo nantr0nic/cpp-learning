@@ -1,0 +1,40 @@
+DISCUSSION QUESTIONS
+1. How does function encapsulation help you write better programs?
+2. How can global variables make code confusing?
+3. How can global constants make code clearer?
+4. What are the pros and cons of optimizing code?
+5. How can software reuse benefit the game industry?
+
+---------
+
+1. Global variables are frowned upon, so encapsulating variables within a function
+    is already considered a 'better' practice. Function encapsulation helps you
+    keep things separate in code. When they are separate, you can modify or optimize
+    a distinct function without having to drastically change the body of the main()
+    function. This way, you can preserve the logic and clarity of the main body when 
+    modifying other functions.
+
+2. Global variables make code confusing because when you use global variables in 
+    multiple parts of a large project you can: lose track of what is happening and where
+    manipulations of that variable take place; lose track of how different manipulations
+    affect each other; need to hop around your code a bunch to understand what is happening.
+
+3. Global constants make code clearer because instead of using the same hard-coded
+    value over and over you can define that value as a constant at the beginning of your code
+    and re-use that constant throughout. Then, if you want to change that constant, you
+    only change it once in its "const" declaration rather than needing to find and replace
+    that value in throughout the code. 
+
+4. The pros of optimizing code are obvious -- increasing the performance of the code enables
+    your program to run faster/better and reducing bottlenecks will ostensibly improve the
+    user experience. The cons of optimizing code too early could be that you might not know
+    what the bottlenecks are until the code is nearing completion. You might introduce 
+    bottlenecks after having optimized the code therefore rendering your previous efforts
+    moot.
+
+5. Software re-use saves time, money, and effort. The software being re-used is tested and
+    known to be optimized and bug-free. Black Isle re-used the 'infinity engine' for 4 or 5
+    games rather than starting from scratch for each title. SFML allows me to make a simple
+    game without having to re-invent the wheel. 
+
+

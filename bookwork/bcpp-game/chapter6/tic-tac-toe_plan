@@ -1,0 +1,36 @@
+/* Pseudocode Plan:
+Create an empty Tic-Tac-Toe board
+Display the game instructions
+Determine who goes first
+Display the board
+While nobody has won and it's not a tie
+    If it's the human's turn
+        Get the human's move
+        Update the baord with the human's move
+    Otherwise
+        Calculate the computer's move
+        Update the board with the computer's move
+    Display the board
+    Switch turns
+Congratulate the winner or declare a tie
+*/
+
+Functions
+
+void instructions() -- Displays game instructions
+char askYesNo(string question) -- Asks a yes or no question. Receives question, returns 'y' or 'n'
+int askNumber(string question, int high, int low = 0) -- Asks for a number within a range. Receives
+    a question, a low number, and a high number. Returns a number in the range from low to high
+char humanPiece() -- Determines the human's piece. Returns either an 'X' or an 'O'
+char opponent(char piece) -- Calculates the opposing piece given a piece. Receives X/O, returns X/O
+void displayBoard(const vector<char>& board) -- Displays the board on the screen. Receives a board.
+char winner(const vector<char>& board) -- Determines the game winner. Receives a board. Returns 
+    an 'X', "O", "T" (tie) or "N" (no winner yet)
+bool isLegal(const vector<char>& board, int move) -- Determines whether a move is legal. Receives 
+    a board and a move. Returns T/F
+int humanMove(const vector<char>& board, char human) -- Gets the human's move. Receives a board
+    and the human's piece. Returns the human's move.
+int computerMove(const vector<char>& board, char computer) -- Calculates the computer's move.
+    Receives a board and the computer's piece. Returns the computer's move.
+void announceWinner(char winner, char computer, char human) -- Congratulates the winner or
+    delcares a tie. Receives the winning side, the computer's piece and the human's piece.

@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "cstdio": "cpp",
+        "cstddef": "cpp",
+        "cstring": "cpp",
+        "chrono": "cpp",
+        "cstdint": "cpp",
+        "iostream": "cpp",
+        "algorithm": "cpp"
+    }
+}

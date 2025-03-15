@@ -1,0 +1,35 @@
+DISCUSSION QUESTIONS
+1. What are some of the things from your favorite game that you could
+represent as objects? What might their data members and member
+functions be?
+2. What are the advantages of using an array over a group of individual
+variables?
+3. What are some limitations imposed by a fixed array size?
+4. What are the advantages and disadvantages of operator overloading?
+5. What kinds of games could you create using string objects, arrays, and
+for loops as your main tools?
+
+---
+
+1. NPC's in the world are individual objects. Their data members might include their
+    name and health points. Their member functions would be to speak when I'm within
+    a specific distance to them.
+
+2. Some advantages of using an array over a group of individual variables are: related
+    things are stored together under the same name (e.g. an inventory list), the items
+    in an array can be manipulated simultaneously whereas individual variables need to
+    be manipulated independently (or at the very least it is least cumbersome to do so
+    with an array).
+
+3. A fixed array size limits the possible manipulations of that array. For example, if
+    an inventory can hold 10 items and it is defined as an array[9] then a possible
+    upgrade of inventory size would require declaring a new array of the new size and
+    copying the old array to the new one.
+
+4. One advantage of operator overloading is being able to use simple operators for multiple
+    applications; by overloading operators you can maximize the uses of basic symbols like
+    +, -, and so on. One disadvantage is the potential for confusion and thereby misusing 
+    a symbol.
+
+5. You can create simple games like wordle or hangman; and also more complex text-based
+    combat games.
