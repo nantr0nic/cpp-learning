@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/cpp-learning/FileContentIndex
+/.vs/cpp-learning/v17
+/.vs/cpp-learning/CopilotIndices
+/.vs
