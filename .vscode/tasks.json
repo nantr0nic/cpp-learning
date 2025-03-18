@@ -8,6 +8,7 @@
                 "-Wall",
                 "-Wextra",
                 "-Wnarrowing",
+                "-Wconversion",
                 "-O2",
                 "-fdiagnostics-color=always",
                 "-g",

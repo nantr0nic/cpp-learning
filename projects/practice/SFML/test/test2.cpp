@@ -8,7 +8,7 @@ int main()
     unsigned int width = 800;
     unsigned int height = 600;
     sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode({width, height}), "Tutorials");
-    window->setFramerateLimit(180);
+    window->setFramerateLimit(60);
 
     sf::ConvexShape convex;
     convex.setPointCount(6);
