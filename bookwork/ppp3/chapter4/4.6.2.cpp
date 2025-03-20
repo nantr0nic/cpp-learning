@@ -1,8 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
+#include <expected> // this is a new C++23 feature
+#include <string>
 
 using std::cin, std::cout, std::cerr, std::vector;
+
+// std::expected<int, std::string>; // this is a new C++23 feature
 
 void error(const std::string& s1, const std::string& s2)
 {
