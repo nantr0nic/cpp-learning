@@ -4,7 +4,8 @@
             "name": "Linux/gcc",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/include/SFML"
+                "/usr/include/SFML",
+                "~/.arduino15/packages/arduino/hardware/renesas_uno/1.4.1"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
