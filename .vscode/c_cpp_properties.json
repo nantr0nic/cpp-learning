@@ -17,7 +17,8 @@
                 "-Wall",
                 "-Wextra",
                 "-Wnarrowing",
-                "-O2"
+                "-O2",
+                "-fmodules-ts"
             ]
         }
     ],

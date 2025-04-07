@@ -11,6 +11,7 @@
                 "-Wnarrowing",
                 "-Wconversion",
                 "-O2",
+                "-fmodules-ts",
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
