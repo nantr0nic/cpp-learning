@@ -35,7 +35,7 @@ vector<int> char_num(const vector<string>& vec)
     int string_char_total = 0;
     for (unsigned long int i = 0; i < vec.size(); ++i)
     {
-        for (char x : vec[i])
+        for (char x : vec[i])   // compiler says x is unused but I think it's alright?
         {
             ++string_char_total;
         }
