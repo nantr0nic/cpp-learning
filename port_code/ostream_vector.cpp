@@ -34,7 +34,33 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec)
     return os;
 }
 
-// Auto'd
+/* 
+// A version of the template using a range-based for loop instead of an index-based one.
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec)
+{
+    os << "[";
+    bool first = true;
+    for (const auto& element : vec)
+    {
+        if (first)
+        {
+            first = false;
+        }
+        else
+        {
+            os << ", ";
+        }
+        os << element;
+    }
+    os << "]";
+    return os;
+}
+
+*/
+
+// Auto'd... I don't think this works.
 /*
 std::ostream& operator<<(std::ostream& os, const std::vector<auto>& vec)
 {
