@@ -10,6 +10,7 @@
                 "-Wextra",
                 "-Wnarrowing",
                 "-Wconversion",
+                "-pedantic",
                 "-O2",
                 "-fmodules-ts",
                 "-fdiagnostics-color=always",
