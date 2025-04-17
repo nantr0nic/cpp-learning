@@ -1,6 +1,3 @@
-// Currently doesn't compile. Working through the examples that are building up to
-// a robust example of struct, enum, and class.
-
 #include <iostream>
 #include <stdexcept>
 #include <exception>
@@ -69,28 +66,45 @@ std::ostream& operator<<(std::ostream& os, Month m)
 class Date {
     public:
         class Invalid { };              // to be used as exception
+        // Various default constructors:
+        Date() { };              // using default values of members in private
+        Date(Year y);       // Jan 1 of year y      // must define below class block
         Date(Year y, Month m, int d);      // constructor: check for valid date and initialize
         bool is_valid();                // return true if date is valid
         // void add_day(int n);            // increase the Date by n days
         // void add_mon(int n);            // increase the Date by n months
-        int year() { return y; }
-        int month() { return to_int(m); }
-        int day() { return d; }
+        int year() const { return y.y; }
+        int month() const { return to_int(m); }
+        int day() const { return d; }
 
     private:
-        Year y;      // year
-        Month m;    // month
-        int d;      // day
+        Year y { 2001};         // THESE are default member initializers...
+        Month m = Month::jan;
+        int d = 1;
 };
+/*
+Date::Date()
+    : y{Year{2001}}, m{Month::jan}, d{1}
+    { }
+*/
+Date::Date(Year yy)     // specified initializers for m and d are 
+    : y{yy}
+    { }
 
 Date::Date(Year y, Month m, int dd)      // constructor
-    : y{y}, m{m}, d{dd}               // member initliazation list
+    : y{y}, m{m}, d{dd}                  // member initialization list
 { 
     if (!is_valid())
     {
         throw Invalid{};
     }
 }
+/*
+Default constructor that takes no arguments:
+Date::Date()
+    : y{Year{2001}}, m{Month::jan}, d{1}
+    { }
+*/
 
 bool Date::is_valid()
 {
@@ -121,25 +135,51 @@ std::ostream& operator<<(std::ostream& os, Date d)
 int main()
 {
     try {
-        int month_num = 0;
-        std::cout << "Enter a number for a month\n >> ";
-        std::cin >> month_num;
+        int month_num = 10;
         Month mm = int_to_month(month_num);
-        std::cout << "The month you entered was " << mm;
+        std::cout << "The 10th month is " << mm;
 
         std::cout << "\nLet's increment the month three times.\n";
-        ++mm;
-        std::cout << "The month is now " << mm;
-        ++mm;
-        std::cout << "\nThe month is now " << mm;
-        ++mm;
-        std::cout << "\nThe month is now " << mm;
-
+        for (int i = 0; i < 3; ++i)
+        {
+            ++mm;
+            std::cout << "The month is now " << mm << "\n";
+        }
+        
         Date dx1 {Year{2025}, Month::apr, 14};
         std::cout << "\n" << dx1 << "\n";
 
         Date dx2 {Year{1991}, int_to_month(2), 6};
-        std::cout << "\n" << dx2 << "\n";
+        std::cout << "\n" << dx2 << "\n\n";
+
+        // Copying
+        Date holiday {Year{1978}, Month::jul, 4};       // initialization
+        Date d2 = holiday;
+        std::cout << "holiday = " << holiday << "\n";
+        std::cout << "d2 = " << d2 << "\n";
+        Date d3 = {Year{1978}, Month::jul, 4};
+        std::cout << "d3 = " << d3 << "\n";
+        holiday = Date{Year{1978}, Month::dec, 24};     // assignment
+        std::cout << "holiday = " << holiday << "\n";
+        d3 = holiday;
+        std::cout << "d3 = " << d3 << "\n";
+
+        Date d4 {d3};       // uses copy constructor
+        std::cout << "d4 = " << d4 << "\n\n";
+
+        // unnamed object
+        std::cout << Date{Year{1999}, Month::dec, 31} << "\n";
+
+        // another unnamed object using the default constructor with no arguments
+        std::cout << Date{} << "\n\n";
+
+        // Some default initializations with built-in types
+        std::cout << int{} << "\n";     // should print just a '0'
+        int y {};
+        std::cout << "int y {} = " << y << "\n";
+        std::cout << "And +1 is..." << ++y << "\n";
+        double y2 {};
+        std::cout << "double y2 {} = " << y2 << "\n";
     }
     catch (const std::runtime_error& e)
     {
