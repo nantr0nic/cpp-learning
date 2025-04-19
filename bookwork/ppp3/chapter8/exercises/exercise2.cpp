@@ -26,6 +26,7 @@ for Name_pairs.
 
 using std::vector, std::string, std::cin, std::cout, std::cerr;
 
+// The Name_pairs class
 class Name_pairs
 {
     public:
@@ -40,24 +41,34 @@ class Name_pairs
 
     private:
         vector<string> name {"Andy", "AP", "Heather", "Jill", "Luz"};
-        vector<double> age;
+        vector<double> age {};
 };
 
+// Declarations
+std::ostream& operator<<(std::ostream& os, const Name_pairs& list);
+bool operator==(const Name_pairs& list1, const Name_pairs& list2);
+bool operator!=(const Name_pairs& list1, const Name_pairs& list2);
+
+// Class definitions
 Name_pairs::Name_pairs(vector<string> names)
     : name{names}
     { }
 
+
+// Prompt user for names
 void Name_pairs::read_names()
 {
-    size_t index {};
-    cout << "Here are some names we're going to work with:\n";
-    for (const auto& individual : name)
+    cout << "Enter names (terminate with 'end'):\n";
+    string input;
+    name.clear();  // Clear existing names
+    
+    while (cin >> input && input != "end")
     {
-        cout << index << ". " << individual << "\n";
-        ++index;
+        name.push_back(input);
     }
 }
 
+// Prompt user for ages
 void Name_pairs::read_ages()
 {
     int ages_input {};
@@ -72,15 +83,13 @@ void Name_pairs::read_ages()
     cout << "Ages have been registered!\n";
 }
 
+// print() is replaced by overloaded <<
 void Name_pairs::print() const 
 {
-    cout << "Here are the names and ages you've entered.\n";
-    for (size_t i = 0; i < name.size(); ++i)
-    {
-        cout << i << ". " << name[i] << " is " << age[i] << " years old.\n";
-    }
+    cout << *this;
 };
 
+// Sorts list alphabetically and sorts ages accordingly
 void Name_pairs::sort()
 {
     vector<string> name_presort = name;
@@ -92,7 +101,7 @@ void Name_pairs::sort()
     for (size_t i = 0; i < name.size(); ++i)
     {
         // Find its position in the original list
-        for (size_t j = 0; i < name_presort.size(); ++j)
+        for (size_t j = 0; j < name_presort.size(); ++j)
         {
             if (name_presort[j] == name[i])
             {
@@ -107,18 +116,37 @@ void Name_pairs::sort()
     age = age_sorted;
 }
 
+// Overloaded function definitions
 std::ostream& operator<<(std::ostream& os, const Name_pairs& list)
 {
     vector<string> names = list.get_name();
     vector<double> ages = list.get_age();
-    cout << "Here are the names and ages you've entered.\n";
-    for (size_t i = 0; i < names.size(); ++i)
+    if (names.empty())
     {
-        cout << i << ". " << names[i] << " is " << ages[i] << " years old.\n";
+        cout << "That list is empty!\n";
+    }
+    else if (names.size() != 0 && ages.empty())
+    {
+        int index {};
+        cout << "Here are the names (without ages) in the list:\n";
+        for (const auto& individual : names)
+        {
+            cout << index << ". " << individual << "\n";
+            ++index;
+        }
+    }
+    else
+    {
+        cout << "Here are the names and ages you've entered.\n";
+        for (size_t i = 0; i < names.size(); ++i)
+        {
+            cout << i << ". " << names[i] << " is " << ages[i] << " years old.\n";
+        }
     }
     return os;
 }
 
+// Compare if two lists are equal (both names and ages)
 bool operator==(const Name_pairs& list1, const Name_pairs& list2)
 {
     vector<string> list1_names = list1.get_name();
@@ -141,33 +169,25 @@ bool operator==(const Name_pairs& list1, const Name_pairs& list2)
 
 bool operator!=(const Name_pairs& list1, const Name_pairs& list2)
 {
-    vector<string> list1_names = list1.get_name();
-    vector<string> list2_names = list2.get_name();
-    vector<double> list1_ages = list1.get_age();
-    vector<double> list2_ages = list2.get_age();
-    if (list1_names.size() != list2_names.size() || list1_ages != list2_ages)
+    /*
+    if (list1 == list2)
     {
-        return true;
+        return false;
     }
-    for (size_t i = 0; i < list1_names.size(); ++i)
-    {
-        if (list1_names[i] != list2_names[i] || list1_ages[i] != list2_ages[i])
-        {
-            return true;
-        }
-    }
-    return false;
+    return true;
+    */
+    // More simple but a little more opaque to me:
+    return !(list1 == list2);
 }
 
 int main()
 {
     Name_pairs list1;
     Name_pairs list2 {vector<string> {"Jeff", "Jered", "Chapin"}};
-    Name_pairs list3 {vector<string> {"Jeff", "Jered", "Chapin"}};
+    Name_pairs list3;
 
     cout << "Welcome to the Name_pairs program.\n";
     try {
-        list1.read_names();
         list1.read_ages();
         list1.print();
         list1.sort();
@@ -175,7 +195,7 @@ int main()
         list1.print();
         cout << "\n\nLet's try our new global << operator!\n\n";
         cout << list1;
-        list2.read_names();
+        cout << list2;
         list2.read_ages();
         cout << list2;
         list3.read_names();
