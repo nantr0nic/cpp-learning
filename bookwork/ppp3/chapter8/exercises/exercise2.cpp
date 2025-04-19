@@ -105,7 +105,7 @@ void Name_pairs::sort()
         {
             if (name_presort[j] == name[i])
             {
-                // Add the corresponding age to new list
+                // Add the corresponding age to sorted ages list
                 age_sorted.push_back(age_presorted[j]);
                 break;      // Stop cuz we don't need to go through rest
                             // of the list if age is found.
@@ -167,16 +167,9 @@ bool operator==(const Name_pairs& list1, const Name_pairs& list2)
     return true;
 }
 
+// Return true if unequal, etc.
 bool operator!=(const Name_pairs& list1, const Name_pairs& list2)
 {
-    /*
-    if (list1 == list2)
-    {
-        return false;
-    }
-    return true;
-    */
-    // More simple but a little more opaque to me:
     return !(list1 == list2);
 }
 
@@ -187,6 +180,7 @@ int main()
     Name_pairs list3;
 
     cout << "Welcome to the Name_pairs program.\n";
+    // Testing all the implemented functions etc.
     try {
         list1.read_ages();
         list1.print();
