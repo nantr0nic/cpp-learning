@@ -8,12 +8,13 @@
 
 using std::string, std::cout, std::cerr, std::vector;
 
+// Book Genres
 enum class Genre
 {
     undefined, fiction, nonfiction, periodical, biography, children
 };
 
-// Returns the genre of a book in string format
+// Returns the genre of a book as a string
 string printGenre(Genre gg)
 {
     switch (gg)
@@ -28,7 +29,8 @@ string printGenre(Genre gg)
     }
 }
 
-// Returns the current date and time in string format
+// Returns the current date and time as a string
+//      in the format "2025-04-23 18:50:00"
 string getCurrentDateTime(const char* format = "%Y-%m-%d")
 {
     auto now = std::chrono::system_clock::now();
@@ -40,7 +42,16 @@ string getCurrentDateTime(const char* format = "%Y-%m-%d")
     return string(buffer);
 }
 
-// Book class
+// Function for bool to return 'yes' and 'no' instead of '1' and '0'
+string boolToString(bool b)
+{
+    return b ? "Yes" : "No";
+}
+
+//////////////////////////////
+///////// Book class /////////
+//////////////////////////////
+// This creates "Book" objects for individual books in the Library
 class Book
 {
     public:
@@ -49,7 +60,7 @@ class Book
         Book(string i, string t, string a, int c, Genre g);  // Books are available by default
         // Functions
         void check() { available = !available; }  // Function to check the book in/out
-        bool validISBN();
+        bool validISBN();   // Checks if ISBN follows correct format
         // Getters
         string getISBN() const { return ISBN; }
         string getTitle() const { return title; }
@@ -59,7 +70,7 @@ class Book
         bool getAvailable() const { return available; }
 
     private:
-        string ISBN {"0-0-0-x"};
+        string ISBN {"0-0-0-x"};    // Format: N-N-N-A (N is number, A is alpha-numeral)
         string title {"Title"};
         string author {"Author"};
         int copyright {0000};
@@ -67,6 +78,8 @@ class Book
         bool available {true};  // Whether book is available to check out
 };
 
+// Create books with ISBN, Title, and Author as strings
+//      and copyright as int, Genre as enum class type
 Book::Book(string i, string t, string a, int c, Genre g)
     : ISBN{i}, title{t}, author{a}, copyright{c}, genre{g}
     { 
@@ -77,30 +90,35 @@ Book::Book(string i, string t, string a, int c, Genre g)
         }
     }
 
-// checks if ISBN is valid (follows n-n-n-x format)
+// Checks if ISBN is valid (follows N-N-N-A format)
 bool Book::validISBN()
 {
     int section = 0;    // section of string (0, 1, 2, or 3)
     bool isNumber = false;   // is the char in first 3 sections a number
-
-    for (char c : ISBN)
+    // Loop through each character in the provided ISBN
+    for (const char& c : ISBN)
     {
+        // If in the first 3 sections (0, 1, and 2)...
         if (section < 3)
         {
+            // Set flag to true if character is a digit
             if (isdigit(c))
             {
                 isNumber = true;
             }
+            // If character is '-' and isNumber is true, proceed to next section
             else if (c == '-' && isNumber)
             {
                 section++;  // moving to next section
                 isNumber =  false;  // reset isNumber for next section
             }
+            // If character is not a digit then
             else
             {
                 return false;   // found a non-digit in the first 3 sections
             }
         }
+        // If in the last section, check if character is alphanumeral
         else if (section == 3)
         {
             if (isalnum(c) && c == ISBN.back())
@@ -117,16 +135,11 @@ bool Book::validISBN()
     return false;
 }
 
-// Function for checking out a book
+// Function for checking in/out a book
+// Don't use this... just use checkBook instead.
 void checking(Book& book)
 {
     book.check();
-}
-
-// Function for bool to return 'yes' and 'no' instead of '1' and '0'
-string boolToString(bool b)
-{
-    return b ? "Yes" : "No";
 }
 
 // Overload == operator to check whether ISBN numbers match for two books
@@ -136,11 +149,13 @@ bool operator==(const Book& book1, const Book& book2)
 }
 
 // Overload != operator to check whether ISBN numbers do NOT match for two books
+// (requires the overloaded == operator)
 bool operator!=(const Book& book1, const Book& book2)
 {
     return !(book1.getISBN() == book2.getISBN());
 }
 
+// Overload << operator to print Book objects
 std::ostream& operator<<(std::ostream& os, const Book& book)
 {
     os << "Title: " << book.getTitle() << "\n";
@@ -151,19 +166,23 @@ std::ostream& operator<<(std::ostream& os, const Book& book)
     return os;
 }
 
-// Patron class
+////////////////////////////////
+///////// Patron class /////////
+////////////////////////////////
+// This creates individual users for the Library
 class Patron
 {
     public:
         Patron(string n, int c);
+        // Functions
+        // Returns bool for whether a user owes fees
+        bool owesFee() const { return (getFeesOwed() != 0) ? true : false; }
+        void setFee(int fee) { fees_owed = fee; }
         // Getters
         string getName() const { return name; }
         int getCardNum() const { return card_num; }
         double getFeesOwed() const { return fees_owed; }
-        // Functions
-        bool owesFee() const { return (getFeesOwed() != 0) ? true : false; }
-        void setFee(int fee) { fees_owed = fee; }
-    
+
     private:
         string name;
         int card_num {};    // 6 digit number (000001)
@@ -194,18 +213,19 @@ std::ostream& operator<<(std::ostream& os, const Patron& p)
 class Library
 {
     public:
+        // Transactions = checking book in / out
         struct Transaction {
             Transaction(Book& b, Patron& p, const string& d); 
             Book& book;
             Patron& patron;
             string date;
         };
-
-        void addBook(const Book& book) { books.push_back(book); }
-        void addPatron(const Patron& patron) { patrons.push_back(patron); }
-        void checkBook(Book& book, Patron& patron);     
-        vector<string> checkOwedFees();
-        void listTransaction();
+        // Functions
+        void addBook(const Book& book) { books.push_back(book); } // adds Book object to Library
+        void addPatron(const Patron& patron) { patrons.push_back(patron); } // adds Patron to Library
+        void checkBook(Book& book, Patron& patron);     // Check book in/out (creates Transaction)
+        vector<string> checkOwedFees();     // Check if user (card #) owes fees
+        void listTransaction();     // Prints transactions vector
 
     private:
         vector<Book> books;
@@ -217,7 +237,7 @@ Library::Transaction::Transaction(Book& b, Patron& p, const string& d)
     : book{b}, patron{p}, date{d}
     { }
 
-
+// Overload << operator to print Transaction objects / Transaction vector
 std::ostream& operator<<(std::ostream& os, const Library::Transaction& t)
 {
     os << "Book: " << t.book << "\n";
@@ -226,6 +246,7 @@ std::ostream& operator<<(std::ostream& os, const Library::Transaction& t)
     return os;
 }
 
+// Lists Transactions record in Transactions vector
 void Library::listTransaction()
 {
     if (transactions.empty())
@@ -243,12 +264,9 @@ void Library::listTransaction()
     }
 }
 
+// Function to check Books in/out and create Transaction if successful
 void Library::checkBook(Book& book, Patron& patron)
 {
-    // Make sure user and book are in library
-    // Make sure user owed no fees
-    // If not... create Transaction
-    
     // Check if the user is in the library's system.
     // This will simply check if the user exists.
     bool user_exists = false;
@@ -275,16 +293,12 @@ void Library::checkBook(Book& book, Patron& patron)
         if (book == title)
         {
             book_exists = true;
-            if (!book.getAvailable())
-            {
-                throw std::runtime_error("The book exists but it is currently checked out!\n");
-            }
             break;
         }
     }
     if (!book_exists)
     {
-        throw std::runtime_error("That book doesn't exist in the library.\n");
+        throw std::runtime_error("That book doesn't exist in the library.\n (Or it's been checked out already!)\n");
     }
 
     // Now check if the user owes fees.
@@ -298,7 +312,29 @@ void Library::checkBook(Book& book, Patron& patron)
     // Date stamp will look like: 2025-04-23 18:50:00
     string date_time = getCurrentDateTime("%Y-%m-%d %H:%M:%S");
     // Flip the book's availability
-    book.check();
+    book.check(); // <-- Manipulates Book object but NOT the Books in Library
+    /*
+    For simplicity, if the book is checked out let's simply remove it from the books vector,
+        if it is being checked back in then we'll (back) to the vector.
+    This is NOT elegant and it won't allow us to tell the User if the book
+        doesn't exist at all or if its currently checked out...
+    But for time's sake and for staying within the confines of the concepts covered
+        in chapters 7 and 8 we'll go with this.
+    An additional consideration is in an ideal world (>_>) the function of checking a book IN
+        and OUT would be separate functions. But I'm following Bjarne's exercise instructions.
+    */
+    if (book.getAvailable())
+    {
+        auto it = std::find(books.begin(), books.end(), book);
+        if (it != books.end())
+        {
+            books.erase(it);
+        }
+    }
+    else if (!book.getAvailable())
+    {
+        books.push_back(book);
+    }
     Transaction t {book, patron, date_time};
     transactions.push_back(t);
     cout << "Transaction successful!\n";
@@ -477,7 +513,7 @@ int main()
         /*
         // Test checking out already checked out book
         cout << "Testing already checked out book:\n";
-        checking(book1); // Check out the book first
+        // checking(book1); // Check out the book first
         library.checkBook(book1, patron2);
         */
         // ^^ Doesn't work :(
