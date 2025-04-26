@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 
+// << for vector<int>
 std::ostream& operator<<(std::ostream& os, const std::vector<int>& vec)
 {
     os << "[";
