@@ -9,7 +9,7 @@ int get10()
     while (true)
     {
         cin >> n;
-        if (cin)                    // we got an inteer; now check it
+        if (cin)                    // we got an int; now check it
         {
             if (1 <=n && n <=10)
             {

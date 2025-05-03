@@ -1,3 +1,10 @@
+/*
+This file completes a few of the exercises from Chapter 8 of PPP3.
+Class function are written in the order they are declared in the class, with any 
+    overloaded operators at the "end" before the next logical block of code.
+*/
+
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -90,6 +97,13 @@ Book::Book(string i, string t, string a, int c, Genre g)
         }
     }
 
+// Function for checking in/out a book
+// Don't use this... just use checkBook instead.
+void checking(Book& book)
+{
+    book.check();
+}
+
 // Checks if ISBN is valid (follows N-N-N-A format)
 bool Book::validISBN()
 {
@@ -133,13 +147,6 @@ bool Book::validISBN()
     }
 
     return false;
-}
-
-// Function for checking in/out a book
-// Don't use this... just use checkBook instead.
-void checking(Book& book)
-{
-    book.check();
 }
 
 // Overload == operator to check whether ISBN numbers match for two books
@@ -237,33 +244,6 @@ Library::Transaction::Transaction(Book& b, Patron& p, const string& d)
     : book{b}, patron{p}, date{d}
     { }
 
-// Overload << operator to print Transaction objects / Transaction vector
-std::ostream& operator<<(std::ostream& os, const Library::Transaction& t)
-{
-    os << "Book: " << t.book << "\n";
-    os << "User: " << t.patron << "\n";
-    os << "Date: " << t.date << "\n";
-    return os;
-}
-
-// Lists Transactions record in Transactions vector
-void Library::listTransaction()
-{
-    if (transactions.empty())
-    {
-        cout << "Transactions list is empty!\n";
-    }
-    int index = 1;
-    for (const auto& entry : transactions)
-    {
-        cout << "<<< #" << index << " transaction information >>>\n\n";
-        cout << entry.book << "\n";
-        cout << entry.patron << "\n";
-        cout << "Date of transaction: " << entry.date << "\n";
-        ++index;
-    }
-}
-
 // Function to check Books in/out and create Transaction if successful
 void Library::checkBook(Book& book, Patron& patron)
 {
@@ -308,19 +288,19 @@ void Library::checkBook(Book& book, Patron& patron)
     }
 
     // Alright! The user and book both exist, the book is available, AND the user doesn't
-    // owe fees so let's create that transaction!
+    //  owe fees so let's create that transaction!
     // Date stamp will look like: 2025-04-23 18:50:00
     string date_time = getCurrentDateTime("%Y-%m-%d %H:%M:%S");
     // Flip the book's availability
     book.check(); // <-- Manipulates Book object but NOT the Books in Library
     /*
     For simplicity, if the book is checked out let's simply remove it from the books vector,
-        if it is being checked back in then we'll (back) to the vector.
+        if it is being checked back in then we'll add it (back) to the vector.
     This is NOT elegant and it won't allow us to tell the User if the book
         doesn't exist at all or if its currently checked out...
     But for time's sake and for staying within the confines of the concepts covered
         in chapters 7 and 8 we'll go with this.
-    An additional consideration is in an ideal world (>_>) the function of checking a book IN
+    An additional consideration is: in an ideal world (>_>) the function of checking a book IN
         and OUT would be separate functions. But I'm following Bjarne's exercise instructions.
     */
     if (book.getAvailable())
@@ -358,6 +338,35 @@ vector<string> Library::checkOwedFees()
     }
     return users_who_owe;
 }
+
+// Lists Transactions record in Transactions vector
+void Library::listTransaction()
+{
+    if (transactions.empty())
+    {
+        cout << "Transactions list is empty!\n";
+    }
+    int index = 1;
+    for (const auto& entry : transactions)
+    {
+        cout << "<<< #" << index << " transaction information >>>\n\n";
+        cout << entry.book << "\n";
+        cout << entry.patron << "\n";
+        cout << "Date of transaction: " << entry.date << "\n";
+        ++index;
+    }
+}
+
+// Overload << operator to print Transaction objects / Transaction vector
+std::ostream& operator<<(std::ostream& os, const Library::Transaction& t)
+{
+    os << "Book: " << t.book << "\n";
+    os << "User: " << t.patron << "\n";
+    os << "Date: " << t.date << "\n";
+    return os;
+}
+
+//////////// main() function ///////////
 
 int main()
 {
