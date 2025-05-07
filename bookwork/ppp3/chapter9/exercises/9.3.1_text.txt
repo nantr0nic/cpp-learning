@@ -1,0 +1,77 @@
+9.3.1 Opening a file
+AA
+If you want to read from a file or write to a file, you have to open a stream
+specifically for that file. An ifstream is an istream for reading from a file, an
+ofstream is an ostream for writing to a file, and an fstream is an iostream that
+can be used for both reading and writing. Before a file stream can be used it
+must be attached to a file. For example:
+Click here to view code image
+cout << "Please enter input file name: ";
+string iname;
+cin >> iname;
+ifstream ist {iname};
+ // ist is an input stream for the file named name
+if (!ist)
+error("can't open input file ",iname);
+AA
+Defining an ifstream with a name string opens the file of that name for
+reading. The test of !ist checks if the file was properly opened. After that, we
+can read from the file exactly as we would from any other istream. For
+example, assuming that the input operator, >>, was defined for a type Point,
+we could write
+vector<Point> points;
+for (Point p; ist>>p; )
+points.push_back(p);
+Output to files is handled in a similar fashion by ofstreams. For example:
+Click here to view code image
+cout << "Please enter name of output file: ";
+string oname;
+cin >> oname;
+ofstream ost {oname};
+ // ost is an output stream for a file named oname
+if (!ost)
+error("can't open output file ",oname);
+Defining an ofstream with a name string opens the file with that name for
+writing. The test of !ost checks if the file was properly opened. After that, we
+can write to the file exactly as we would to any other ostream. For example:
+Click here to view code image
+for (Point p: points)
+ost << '(' << p.x << ',' << p.y << ")\n";
+When a file stream goes out of scope its associated file is closed. When a file
+is closed its associated buffer is “flushed”; that is, the characters from the
+buffer are written to the file.
+It is usually best to open files early in a program before any serious
+computation has taken place. After all, it is a waste to do a lot of work just to
+find that we can’t complete it because we don’t have anywhere to write our
+results.
+Opening the file implicitly as part of the creation of an ostream or an
+istream is ideal, and a file stream implicitly closes its file upon scope exit; see
+§15.5. For example:
+Click here to view code image
+void fill_from_file(vector<Point>& points, string& name)
+{
+ifstream ist {name};
+ // open file for reading
+if (!ist)
+error("can't open input file ",name);
+// ... use ist ...
+// the file is implicitly closed when we leave the function
+}
+Don’t forget to test a stream after opening it.
+You can also use explicit open() and close() operations. For example:
+Click here to view code image
+ifstream ifs;
+ifs.open(name,ios::in);
+ // open file named name for reading
+// ...
+ifs.close();
+ // close file
+However, that’s verbose. Also, relying on scope to control when the file is
+open minimizes the chances of someone trying to use it before it has been
+opened or after it was closed.
+Why would you use open() or close() explicitly? Well, occasionally the
+lifetime of a connection to a file isn’t conveniently limited by a scope so you
+have to. But that’s rare enough for us not to have to worry about it here. More
+to the point, you’ll find such use in code written by people using styles from
+languages and libraries that don’t have the scoped idiom used by iostreams
+(and the rest of the C++ standard library, §18.4.2).
