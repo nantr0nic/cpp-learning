@@ -1,3 +1,7 @@
+/*
+Write a program that removes all vowels from a file (“disemvowels”).
+For example, Once upon a time! becomes nc pn tm!. 
+*/
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
@@ -44,11 +48,13 @@ int main()
     */
 
     // Devowel by rebuilding the sentences with only consonants
-    // Fix later...
     string line;
     string disemvoweled;
+    vector<string> output_lines;
     while (getline(ist, line))
     {
+        disemvoweled.clear();
+
         for (const char& c : line)
         {
             if (!isVowel(c))
@@ -56,7 +62,12 @@ int main()
                 disemvoweled += c;
             }
         }
-        cout << disemvoweled << "\n";
+        output_lines.push_back(disemvoweled);
+    }
+
+    for (const string& line : output_lines)
+    {
+        cout << line << "\n";
     }
 
     return 0;
