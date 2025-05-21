@@ -5,7 +5,11 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include/SFML",
-                "~/.arduino15/packages/arduino/hardware/renesas_uno/1.4.1"
+                "~/.arduino15/packages/arduino/hardware/renesas_uno/1.4.1",
+                "/usr/include/qt6/**",
+                "/usr/include/qt6/QtCore",
+                "/usr/include/qt6/QtGui",
+                "/usr/include/qt6/QtWidgets"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
