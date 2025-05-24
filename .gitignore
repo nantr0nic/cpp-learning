@@ -1,8 +1,8 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/.vs/cpp-learning/FileContentIndex
+﻿/.vs/cpp-learning/FileContentIndex
 /.vs/cpp-learning/v17
 /.vs/cpp-learning/CopilotIndices
 /.vs
+
+# Ignore Qt build stuff in PPP3 chapters 10+
+bookwork/ppp3/chapter_10/exercises/chapter_exercises/build
+bookwork/ppp3/chapter_11/scratchpad_book_stuff/build

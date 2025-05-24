@@ -261,6 +261,15 @@ struct Polygon : Closed_polyline {	// closed sequence of non-intersecting lines
 
 struct Lines : Shape {	// independent lines
     Lines(initializer_list<Point> lst = {}) : Shape{lst} { if (lst.size() % 2) error("odd number of points for Lines"); }
+    // I added the following code to make it compatible with the examples in the book.
+    Lines(initializer_list<pair<Point,Point>> lst)
+    {
+        for (const auto& line_pair : lst)
+        {
+            Shape::add(line_pair.first);
+            Shape::add(line_pair.second);
+        }
+    }
     void draw_specifics(Painter& painter) const override;
     void add(Point p1, Point p2) { Shape::add(p1); Shape::add(p2); redraw();}
 };
