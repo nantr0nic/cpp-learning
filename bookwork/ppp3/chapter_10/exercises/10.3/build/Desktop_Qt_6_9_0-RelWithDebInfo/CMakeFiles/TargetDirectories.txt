@@ -1,9 +1,0 @@
-/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_10/exercises/10.3/build/Desktop_Qt_6_9_0-RelWithDebInfo/CMakeFiles/Programming_Qt.dir
-/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_10/exercises/10.3/build/Desktop_Qt_6_9_0-RelWithDebInfo/CMakeFiles/edit_cache.dir
-/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_10/exercises/10.3/build/Desktop_Qt_6_9_0-RelWithDebInfo/CMakeFiles/rebuild_cache.dir
-/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_10/exercises/10.3/build/Desktop_Qt_6_9_0-RelWithDebInfo/CMakeFiles/list_install_components.dir
-/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_10/exercises/10.3/build/Desktop_Qt_6_9_0-RelWithDebInfo/CMakeFiles/install.dir
-/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_10/exercises/10.3/build/Desktop_Qt_6_9_0-RelWithDebInfo/CMakeFiles/install/local.dir
-/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_10/exercises/10.3/build/Desktop_Qt_6_9_0-RelWithDebInfo/CMakeFiles/install/strip.dir
-/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_10/exercises/10.3/build/Desktop_Qt_6_9_0-RelWithDebInfo/CMakeFiles/Programming_Qt_autogen_timestamp_deps.dir
-/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_10/exercises/10.3/build/Desktop_Qt_6_9_0-RelWithDebInfo/CMakeFiles/Programming_Qt_autogen.dir
