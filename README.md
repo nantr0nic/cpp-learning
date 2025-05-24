@@ -7,6 +7,6 @@ I've finished the book "Beginning C++ Through Game Programming" book and am curr
 In addition to the "bookwork" folder I have some small side-projects in the "projects" folder that aren't developed at all but are little refresher/breaks between chapters I'm reading.
 One notable mention is in the "Arduino" folder under "projects" that utilizes a BME280 sensor and outputs readings to a small OLED screen. 
 
-Some areas of interest within C++ (though I'm trying to focus on learning the fundamentals of the language) are SFML / game programming and Arduino / ESP32 / microcontroller programming.
+Some areas of interest within C++ (though I'm primarily working on learning the fundamentals of the language) are game programming and Arduino / ESP32 / microcontroller programming.
 
 If you have any suggestions, comments, questions, or musings I'm always happy to hear from you :)
