@@ -69,7 +69,7 @@ void Polygon::add(Point p)
 {
     int np = number_of_points();
 
-    if (1 < np) { // check that thenew line isn't parallel to the previous one
+    if (1 < np) { // check that the new line isn't parallel to the previous one
         if (p == point(np - 1))
             error("polygon point equal to previous point");
         bool parallel;
