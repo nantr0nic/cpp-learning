@@ -157,6 +157,7 @@ private:
     virtual void draw_specifics(Painter& painter) const = 0;	// no default implementation that can be called
 public:
 	virtual void move(int dx, int dy);	// move the shape +=dx and +=dy
+    virtual void shiftMark(Point xy); // shift a Mark to xy
 
     void set_color(Color col) { lcolor = col; redraw();}
 	Color color() const { return lcolor; }
@@ -382,6 +383,8 @@ struct Marked_polyline : Open_polyline {
     void set_color(Color col) { Shape::set_color(col); set_mark_color(col); redraw();}
     void set_mark_color(Color c) { m_color = c; redraw();}
     Color mark_color() const { return m_color;}
+
+    string get_mark() const { return mark; }
 
     void draw_specifics(Painter& painter) const override;
 private:

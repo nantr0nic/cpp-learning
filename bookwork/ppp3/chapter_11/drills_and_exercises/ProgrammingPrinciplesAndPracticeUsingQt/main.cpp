@@ -56,50 +56,50 @@ struct Exercise2
     }
 };
 
-// // Exercise 3
-// // Same as exercise 2 but for Circles
-// struct Exercise3Circle
-// {
-//     Exercise3Circle();
+// Exercise 3
+// Same as exercise 2 but for Circles
+struct Exercise3Circle
+{
+    Exercise3Circle();
 
-//     // Point 0 is top-left corner.
-//     Point n(const Circle& cir)
-//     {
-//         return Point((cir.center().x), (cir.center().y - cir.radius()));
-//     }
-//     Point s(const Circle& cir)
-//     {
-//         return Point((cir.center().x), (cir.center().y + cir.radius()));
-//     }
-//     Point e(const Circle& cir)
-//     {
-//         return Point((cir.center().x + cir.radius()), (cir.center().y));
-//     }
-//     Point w(const Circle& cir)
-//     {
-//         return Point((cir.center().x - cir.radius()), (cir.center().y));
-//     }
-//     Point center(const Circle& cir)
-//     {
-//         return Point((cir.center().x), (cir.center().y));
-//     }
-//     Point ne(const Circle& cir)
-//     {
-//         return Point((cir.center().x + (cir.radius() / 1.4)), (cir.center().y - (cir.radius() / 1.4)));
-//     }
-//     Point se(const Circle& cir)
-//     {
-//         return Point((cir.center().x + (cir.radius() / 1.4)), (cir.center().y + (cir.radius() / 1.4)));
-//     }
-//     Point sw(const Circle& cir)
-//     {
-//         return Point((cir.center().x - (cir.radius() / 1.4)), (cir.center().y + (cir.radius() / 1.4)));
-//     }
-//     Point nw(const Circle& cir)
-//     {
-//         return Point((cir.center().x - (cir.radius() / 1.4)), (cir.center().y - (cir.radius() / 1.4)));
-//     }
-// };
+    // Point 0 is top-left corner.
+    Point n(const Circle& cir)
+    {
+        return Point((cir.center().x), (cir.center().y - cir.radius()));
+    }
+    Point s(const Circle& cir)
+    {
+        return Point((cir.center().x), (cir.center().y + cir.radius()));
+    }
+    Point e(const Circle& cir)
+    {
+        return Point((cir.center().x + cir.radius()), (cir.center().y));
+    }
+    Point w(const Circle& cir)
+    {
+        return Point((cir.center().x - cir.radius()), (cir.center().y));
+    }
+    Point center(const Circle& cir)
+    {
+        return Point((cir.center().x), (cir.center().y));
+    }
+    Point ne(const Circle& cir)
+    {
+        return Point((cir.center().x + (cir.radius() / 1.4)), (cir.center().y - (cir.radius() / 1.4)));
+    }
+    Point se(const Circle& cir)
+    {
+        return Point((cir.center().x + (cir.radius() / 1.4)), (cir.center().y + (cir.radius() / 1.4)));
+    }
+    Point sw(const Circle& cir)
+    {
+        return Point((cir.center().x - (cir.radius() / 1.4)), (cir.center().y + (cir.radius() / 1.4)));
+    }
+    Point nw(const Circle& cir)
+    {
+        return Point((cir.center().x - (cir.radius() / 1.4)), (cir.center().y - (cir.radius() / 1.4)));
+    }
+};
 
 // Exercise 4
 
@@ -139,6 +139,14 @@ struct Regular_hexagon : Closed_polyline
     void draw_specifics(Painter& painter) const override;
 };
 
+// Exercise 12
+struct rTriangle : Closed_polyline
+{
+    rTriangle(Point origin, int size, int dir);
+
+    double adjusted_side {};
+    int cardinal_side {};
+};
 
 using namespace Graph_lib;
 int main(int /*argc*/, char * /*argv*/[])
@@ -378,11 +386,97 @@ int main(int /*argc*/, char * /*argv*/[])
     // }
 
 
-    // Exercise 10
+    // // Exercise 10
+    // Circle cir {{ 150, 150 }, 50};
+    // cir.set_color(Color::white);
+    // Exercise3Circle comp;
+    // Mark e10 {{ comp.n(cir).x, comp.n(cir).y }, 'X'};
+    // e10.set_color(Color::red);
+    // win.attach(cir);
+    // win.attach(e10);
+    // win.wait_for_button();
+    // // Rather than calculate the travel along a circle, I added
+    // // "shiftMark" to Shape to move to a new coordinate rather than
+    // // increment x and y by ints
+    // e10.shiftMark(comp.ne(cir));
+    // win.wait_for_button();
+    // e10.shiftMark(comp.e(cir));
+    // win.wait_for_button();
+    // e10.shiftMark(comp.se(cir));
+    // win.wait_for_button();
+    // e10.shiftMark(comp.s(cir));
+    // win.wait_for_button();
+    // e10.shiftMark(comp.sw(cir));
+    // win.wait_for_button();
+    // e10.shiftMark(comp.w(cir));
+    // win.wait_for_button();
+    // e10.shiftMark(comp.nw(cir));
+
+
+    // // Exercise 11
+    // Vector_ref<Rectangle> vr;
+
+    // const int max = 32;     // number of columns
+    // const int side = 32;    // size of color rectangle
+    // const int left = 10;    // left edge
+    // const int top = 100;    // top edge
+    // int color_index = 0;
+
+    // for (int i = 0; i < max; ++i)       // all columns
+    // {
+    //     for (int j = 0; j < 8; ++j)     // 8 rows in each column
+    //     {
+    //         vr.push_back(make_unique<Rectangle>(Point{ i*side+left, j*side+top }, side, side));
+    //         vr[vr.size()-1].set_fill_color(color_index);
+    //         vr[vr.size()-1].set_style(Line_style::none);    // this removes the borders
+    //         ++color_index;
+    //         win.attach(vr[vr.size()-1]);
+    //     }
+    // }
+
+
+    // // Exercise 12
+
+    // // Vector_ref<rTriangle> triangles;
+    // // for (int i {1}; i <= 8; ++i)
+    // // {
+    // //     triangles.push_back(make_unique<rTriangle>(Point{ 100 * i, 100 * i}, 50, i));
+    // //     win.attach(triangles[triangles.size() - 1]);
+    // // }
+
+    // rTriangle one {{ 400, 200 }, 100, 1};
+    // one.set_fill_color(Color::white);
+    // win.attach(one);
+    // rTriangle two {{one.point(2).x, one.point(2).y}, 100, 5};
+    // two.set_fill_color(Color::red);
+    // win.attach(two);
+    // rTriangle three {{two.point(1).x, two.point(1).y}, 100, 6};
+    // three.set_fill_color(Color::green);
+    // win.attach(three);
+    // rTriangle four {{three.point(2).x, three.point(2).y}, 100, 7};
+    // four.set_fill_color(Color::blue);
+    // win.attach(four);
+    // // rTriangle five {{four.point(2).x, four.point(2).y}, 100, 5};
+    // // five.set_fill_color(Color::yellow);
+    // // win.attach(five);
+    // rTriangle five {{one.point(1).x, one.point(1).y}, 100, 5};
+    // five.set_fill_color(Color::yellow);
+    // win.attach(five);
+    // // God damn it I'm giving up. Got halfway there.
+    // // Drawing an octogon out of right triangles is harder
+    // // than I thought it would be
+
+
+    // Exercise 13
+
+
 
 
     win.wait_for_button();
 }
+
+
+
 
 // Exercise 1
 Arrow::Arrow(Point p1, Point p2)
@@ -436,9 +530,9 @@ void Arrow::draw_specifics(Painter &painter) const
 Exercise2::Exercise2()
     { }
 
-// // Exercise 3
-// Exercise3Circle::Exercise3Circle()
-//     { }
+// Exercise 3
+Exercise3Circle::Exercise3Circle()
+    { }
 
 // Exercise 4
 Box::Box(Point xy, int ww, int hh, const std::string label)
@@ -501,4 +595,178 @@ Regular_hexagon::Regular_hexagon(Point center, int radius)
 void Regular_hexagon::draw_specifics(Painter& painter) const
 {
     Closed_polyline::draw_specifics(painter);
+}
+
+rTriangle::rTriangle(Point origin, int side, int dir)
+{
+    // This is NOT a good way to define right triangle
+    // but it suffices to complete this exercise
+    // and it represents the fewest constructor arguments I could devise
+    // Also, 'direction' will be the direction the apex points
+    // 1 = N, 2 = NE, 3 = E, 4 = SE, etc.
+    //// This is what I originally wrote but because of geometry details
+    /// the N, E, S, W triangles end up with longer hypotenuses
+    /// which works fine BUT to make an octagonal shape I need them
+    /// to be visually identical...
+    /// so to save time I had AI write the code beneath this one
+    // if (dir == 1)
+    // {
+    //     // Apex pointing north
+    //     // Bottom point (where the right angle is)
+    //     add(origin);
+    //     Point second {(origin.x - side), (origin.y - side)};
+    //     add(second);
+    //     Point third {(origin.x + side), (origin.y - side)};
+    //     add(third);
+    // }
+    // else if (dir == 2)
+    // {
+    //     // Apex pointing north-east
+    //     add(origin);
+    //     Point second {(origin.x), (origin.y - side)};
+    //     add(second);
+    //     Point third {(origin.x + side), (origin.y)};
+    //     add(third);
+    // }
+    // else if (dir == 3)
+    // {
+    //     // Apex pointing east
+    //     add(origin);
+    //     Point second {(origin.x + side), (origin.y - side)};
+    //     add(second);
+    //     Point third {(origin.x + side), (origin.y + side)};
+    //     add(third);
+    // }
+    // else if (dir == 4)
+    // {
+    //     // Apex pointing south-east
+    //     add(origin);
+    //     Point second {(origin.x + side), (origin.y)};
+    //     add(second);
+    //     Point third {(origin.x), (origin.y + side)};
+    //     add(third);
+    // }
+    // else if (dir == 5)
+    // {
+    //     // Apex pointing south
+    //     add(origin);
+    //     Point second {(origin.x + side), (origin.y + side)};
+    //     add(second);
+    //     Point third {(origin.x - side), (origin.y + side)};
+    //     add(third);
+    // }
+    // else if (dir == 6)
+    // {
+    //     // Apex pointing south-west
+    //     add(origin);
+    //     Point second {(origin.x - side), (origin.y)};
+    //     add(second);
+    //     Point third {(origin.x), (origin.y + side)};
+    //     add(third);
+    // }
+    // else if (dir == 7)
+    // {
+    //     // Apex pointing west
+    //     add(origin);
+    //     Point second {(origin.x - side), (origin.y - side)};
+    //     add(second);
+    //     Point third {(origin.x - side), (origin.y + side)};
+    //     add(third);
+    // }
+    // else if (dir == 8)
+    // {
+    //     // Apex pointing north-west
+    //     add(origin);
+    //     Point second {(origin.x - side), (origin.y)};
+    //     add(second);
+    //     Point third {(origin.x), (origin.y - side)};
+    //     add(third);
+    // }
+    // else {
+    //     std::cout << "Poorly constructed";
+    // }
+    // For cardinal directions, adjust leg length to match diagonal triangle areas
+    // Diagonal triangles have area = (side * side) / 2
+    // Cardinal triangles (isosceles right) have area = (adjusted_side^2) / 2
+    // To make areas equal: adjusted_side = side (no adjustment needed)
+    // But for visual consistency, we want same "extent" so we use side/sqrt(2)
+    adjusted_side = side / std::sqrt(2.0);
+    cardinal_side = static_cast<int>(adjusted_side);
+
+    if (dir == 1)
+    {
+        // Apex pointing north - isosceles right triangle
+        add(origin);
+        Point second{(origin.x - cardinal_side), (origin.y - cardinal_side)};
+        add(second);
+        Point third{(origin.x + cardinal_side), (origin.y - cardinal_side)};
+        add(third);
+    }
+    else if (dir == 2)
+    {
+        // Apex pointing north-east - right triangle
+        add(origin);
+        Point second{(origin.x), (origin.y - side)};
+        add(second);
+        Point third{(origin.x + side), (origin.y)};
+        add(third);
+    }
+    else if (dir == 3)
+    {
+        // Apex pointing east - isosceles right triangle
+        add(origin);
+        Point second{(origin.x + cardinal_side), (origin.y - cardinal_side)};
+        add(second);
+        Point third{(origin.x + cardinal_side), (origin.y + cardinal_side)};
+        add(third);
+    }
+    else if (dir == 4)
+    {
+        // Apex pointing south-east - right triangle
+        add(origin);
+        Point second{(origin.x + side), (origin.y)};
+        add(second);
+        Point third{(origin.x), (origin.y + side)};
+        add(third);
+    }
+    else if (dir == 5)
+    {
+        // Apex pointing south - isosceles right triangle
+        add(origin);
+        Point second{(origin.x + cardinal_side), (origin.y + cardinal_side)};
+        add(second);
+        Point third{(origin.x - cardinal_side), (origin.y + cardinal_side)};
+        add(third);
+    }
+    else if (dir == 6)
+    {
+        // Apex pointing south-west - right triangle
+        add(origin);
+        Point second{(origin.x - side), (origin.y)};
+        add(second);
+        Point third{(origin.x), (origin.y + side)};
+        add(third);
+    }
+    else if (dir == 7)
+    {
+        // Apex pointing west - isosceles right triangle
+        add(origin);
+        Point second{(origin.x - cardinal_side), (origin.y - cardinal_side)};
+        add(second);
+        Point third{(origin.x - cardinal_side), (origin.y + cardinal_side)};
+        add(third);
+    }
+    else if (dir == 8)
+    {
+        // Apex pointing north-west - right triangle
+        add(origin);
+        Point second{(origin.x - side), (origin.y)};
+        add(second);
+        Point third{(origin.x), (origin.y - side)};
+        add(third);
+    }
+    else
+    {
+        std::cout << "Poorly constructed" << std::endl;
+    }
 }

@@ -114,6 +114,15 @@ void Shape::move(int dx, int dy)
     redraw();
 }
 
+void Shape::shiftMark(Point xy)
+{
+    for (unsigned int i = 0; i < points.size(); ++i) {
+        points[i].x = xy.x;
+        points[i].y = xy.y;
+    }
+    redraw();
+}
+
 void Lines::draw_specifics(Painter &painter) const
 {
     if (number_of_points() % 2 == 1)

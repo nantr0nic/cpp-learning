@@ -162,24 +162,6 @@ int main()
         // win.wait_for_button();
 
         // Color palette squares
-        Vector_ref<Rectangle> vr;
-
-        const int max = 32;     // number of columns
-        const int side = 32;    // size of color rectangle
-        const int left = 10;    // left edge
-        const int top = 100;    // top edge
-        int color_index = 0;
-
-        for (int i = 0; i < max; ++i)       // all columns
-        {
-            for (int j = 0; j < 8; ++j)     // 8 rows in each column
-            {
-                vr.push_back(make_unique<Rectangle>(Point{ i*side+left, j*side+top }, side, side));
-                vr[vr.size()-1].set_fill_color(color_index);
-                ++color_index;
-                win.attach(vr[vr.size()-1]);
-            }
-        }
 
         // // Circle
         // Circle c1 {Point{ 100, 200 }, 50};
