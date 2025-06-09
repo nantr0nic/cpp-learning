@@ -14,8 +14,8 @@ struct D : B
 
 struct DD : D
 {
-    void f() const override { std::cout << "DD::f "; }         // This will not because not const
-    void g() const { std::cout << "DD::g "; }   // (must be the same as base)
+    void f() const override { std::cout << "DD::f "; }         
+    void g() const { std::cout << "DD::g "; }   
 };
 
 void call(B& b)
