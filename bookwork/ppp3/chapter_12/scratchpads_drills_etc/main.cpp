@@ -67,6 +67,31 @@ public:
     }
 };
 
+// Exercise 5
+class Striped_rectangle : public Rectangle
+{
+public:
+    using Rectangle::Rectangle;
+    void draw_specifics(Painter& painter) const override;
+    void set_stripe_distance(int pixels) { stripe_distance = pixels; }
+
+private:
+    int stripe_distance { 4 };
+};
+
+// Exercise 6
+class Striped_circle : public Circle
+{
+public:
+    using Circle::Circle;
+
+    void draw_specifics(Painter& painter) const override;
+    void set_stripe_distance(int pixels) { stripe_distance = pixels; }
+
+private:
+    int stripe_distance { 4 };
+};
+
 using namespace Graph_lib;
 int main(int /*argc*/, char * /*argv*/[])
 {
@@ -94,6 +119,16 @@ int main(int /*argc*/, char * /*argv*/[])
     // win.attach(dont_move_me);
     // win.wait_for_button();
     // dont_move_me.move(50, 50);
+
+    // // Exercise 5
+    // Striped_rectangle sr {{ 100, 100 }, 200, 500};
+    // sr.set_stripe_distance(2);
+    // win.attach(sr);
+
+    // Exercise 6
+    Striped_circle sc {{ 100, 100 }, 100};
+    win.attach(sc);
+
 
     win.wait_for_button();
 }
@@ -218,4 +253,41 @@ void Frowny_hat::draw_specifics(Painter& painter) const
     painter.draw_line(hat_bottom_left, hat_top_left);
     painter.draw_line(hat_top_left, hat_top_right);
     painter.draw_line(hat_top_right, hat_bottom_right);
+}
+
+void Striped_rectangle::draw_specifics(Painter& painter) const
+{
+    Rectangle::draw_specifics(painter);
+
+    // X for left and right sides
+    const int left_side_x { this->point(0).x };
+    const int right_side_x { left_side_x + this->width() };
+
+    // Y for the top and bottom
+    const int top_y { this->point(0).y };
+    const int bottom_y { this->point(0).y + this->height()};
+
+    // Number of pixels between stripes on Y axis comes from stripe_distance
+    // Will also determine how many stripes there are
+
+    for (int y {top_y + stripe_distance}; y < bottom_y; y += stripe_distance)
+    {
+        Point left_side { left_side_x, y };
+        Point right_side { right_side_x, y };
+        painter.draw_line(left_side, right_side);
+    }
+}
+
+void Striped_circle::draw_specifics(Painter& painter) const
+{
+    Circle::draw_specifics(painter);
+
+    // To cheat and save time I'm going to make radial stripes lol
+    Point center { this->center() };
+    int radius { this->radius() };
+
+    for (int stripe {0}; stripe < 180; stripe += stripe_distance)
+    {
+    //    Point draw_to {}
+    }
 }
