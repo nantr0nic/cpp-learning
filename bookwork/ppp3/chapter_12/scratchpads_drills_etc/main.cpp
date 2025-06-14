@@ -92,6 +92,24 @@ private:
     int stripe_distance { 4 };
 };
 
+
+// Exercise 8
+class Octagon : public Polygon
+{
+public:
+    Octagon(Point center, int radius);
+
+    Point center() const { return m_center; }
+    int radius() const { return r; }
+
+    void draw_specifics(Painter& painter) const;
+
+private:
+    Point m_center;
+    int r;
+
+};
+
 using namespace Graph_lib;
 int main(int /*argc*/, char * /*argv*/[])
 {
@@ -125,9 +143,15 @@ int main(int /*argc*/, char * /*argv*/[])
     // sr.set_stripe_distance(2);
     // win.attach(sr);
 
-    // Exercise 6
-    Striped_circle sc {{ 100, 100 }, 100};
-    win.attach(sc);
+    // // Exercise 6
+    // Striped_circle sc {{ 100, 100 }, 100};
+    // win.attach(sc);
+
+    // Exercise 8
+    Octagon oct {{ 150, 150 }, 100};
+    oct.set_fill_color(Color::cyan);
+    oct.set_style(Line_style(Line_style::dashdot, 6));
+    win.attach(oct);
 
 
     win.wait_for_button();
@@ -282,12 +306,53 @@ void Striped_circle::draw_specifics(Painter& painter) const
 {
     Circle::draw_specifics(painter);
 
-    // To cheat and save time I'm going to make radial stripes lol
-    Point center { this->center() };
-    int radius { this->radius() };
+    const Point center_point { center() };
+    const int r { radius() };
 
-    for (int stripe {0}; stripe < 180; stripe += stripe_distance)
+    // Draw horizontal stripes from top to bottom of the circle
+    for (int y { center_point.y - r + stripe_distance };
+         y < center_point.y + r;
+         y += stripe_distance)
     {
-    //    Point draw_to {}
+        // Calculate how far this y-coordinate is from the center
+        int dy { y - center_point.y };
+
+        // Use Pythagorean theorem to find x-intersection points
+        // x² + dy² = r²  =>  x = ±√(r² - dy²)
+        int dx_squared { r * r - dy * dy };
+
+        if (dx_squared >= 0)  // Make sure we're inside the circle
+        {
+            int dx { static_cast<int>(std::sqrt(dx_squared)) };
+
+            Point left_point { center_point.x - dx, y };
+            Point right_point { center_point.x + dx, y };
+
+            painter.draw_line(left_point, right_point);
+        }
     }
+}
+
+// Exercise 8 class
+Octagon::Octagon(Point center, int radius)
+    : m_center{ center }, r{ radius }
+{
+    const double pi { 3.14159265359 };
+    const double angle_step { (2.0 * pi) / 8.0 }; // 2pi / # of sides
+    const double start_angle { 90 * (pi / 180) }; // degrees * (pi / 180)
+
+    for (int i {0}; i < 8; ++i)
+    {
+        double angle { start_angle + i * angle_step };
+        int x { m_center.x + static_cast<int>(r * std::cos(angle)) };
+        int y { m_center.y - static_cast<int>(r * std::sin(angle)) };
+
+        add(Point{ x, y });
+    }
+
+}
+
+void Octagon::draw_specifics(Painter& painter) const
+{
+    Polygon::draw_specifics(painter);
 }
