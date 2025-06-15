@@ -7,6 +7,7 @@ public:
     virtual void func2() const { std::cout << "This is A's func2()\n"; }
     virtual void func3() const { std::cout << "This is A's func3()\n"; }
     virtual void func4() const { std::cout << "This is A's func4()\n"; }
+    void func5() const { std::cout << "This is A's func5()\n"; }
 };
 
 class B : public A 
@@ -33,6 +34,7 @@ public:
     // let's inherit func2 from A 
     // let's inherit func3 from B
     void func4() const override { std::cout << "This is D's override of C's func4()\n"; }
+    // let's inherit (non-virtual) func5 from A
 };
 
 int main()
@@ -42,6 +44,7 @@ int main()
     d.func2();
     d.func3();
     d.func4();
+    d.func5();
 
     /*
     In this example, D's vtbl has pointers to functions in A, B, C, and D (itself).

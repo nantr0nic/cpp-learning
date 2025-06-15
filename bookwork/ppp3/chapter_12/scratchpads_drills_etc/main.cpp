@@ -110,6 +110,64 @@ private:
 
 };
 
+// Exercise 11
+struct Group
+{
+    Vector_ref<Shape> container {};
+    void move(int dx, int dy)
+    {
+        for (const auto& shape : container)
+            shape->move(dx, dy);
+    }
+    void set_color(Color col)
+    {
+        for (const auto& shape : container)
+            shape->set_color(col);
+    }
+    void set_fill_color(Color col)
+    {
+        for (const auto& shape : container)
+            shape->set_fill_color(col);
+    }
+    void attach(Simple_window& win)
+    {
+        for (const auto& shape : container)
+            win.attach(*shape);
+    }
+};
+
+// Exercises 13-15
+// Power function to do 2^(levels)
+int int_pow(int base, int exp)
+{
+    int result {1};
+    for (int i {0}; i < exp; ++i)
+    {
+        result *= base;
+    }
+    return result;
+}
+
+class Binary_tree : public Shape
+{
+public:
+    Binary_tree(Point root_xy, int ll);
+    void draw_specifics(Painter& painter) const;
+
+private:
+    void set_child_points(Point xy);
+    void add_nodes();
+
+    Point root {};                      // the Point of the root node
+    int levels {0};                     // 0 = just the root node
+    std::vector<Point> nodes { root };  // Vector with the nodes' Points
+                                        // Initialized with the root node's points
+
+    const double pi { 3.14159265359 };
+    double angle { pi / 4 };            // the angle of lines going down from a node
+    int line_length { 50 };             // the length of the connecting lines
+};
+
 using namespace Graph_lib;
 int main(int /*argc*/, char * /*argv*/[])
 {
@@ -147,12 +205,53 @@ int main(int /*argc*/, char * /*argv*/[])
     // Striped_circle sc {{ 100, 100 }, 100};
     // win.attach(sc);
 
-    // Exercise 8
-    Octagon oct {{ 150, 150 }, 100};
-    oct.set_fill_color(Color::cyan);
-    oct.set_style(Line_style(Line_style::dashdot, 6));
-    win.attach(oct);
+    // // Exercise 8
+    // Octagon oct {{ 150, 150 }, 100};
+    // oct.set_fill_color(Color::cyan);
+    // oct.set_style(Line_style(Line_style::dashdot, 6));
+    // win.attach(oct);
 
+    // // Exercise 11
+    // Group draughts;
+    // for (int i {0}; i < 9; ++i)
+    // {
+    //     for (int j {0}; j < 9; ++j)
+    //     {
+    //         draughts.container.push_back(
+    //             make_unique<Rectangle>(Point{ 75 * j, 75 * i}, 75, 75)
+    //             );
+    //     }
+    // }
+    // draughts.attach(win);
+    // win.wait_for_button();
+    // for (int i {0}; i < draughts.container.size(); ++i)
+    // {
+    //     if (i % 2 == 0)
+    //     {
+    //         draughts.container[i].set_fill_color(Color::white);
+    //     }
+    //     else
+    //     {
+    //         draughts.container[i].set_fill_color(Color::black);
+    //     }
+    // }
+    // win.wait_for_button();
+    // for (const auto& shape : draughts.container)
+    // {
+    //     shape->move(25, 25);
+    // }
+    // win.wait_for_button();
+    // for (int i {0}; i < draughts.container.size(); ++i)
+    // {
+    //     if (i % 2 != 0)
+    //     {
+    //         draughts.container[i].move(37, 37);
+    //     }
+    // }
+
+    // Exercises 13-15
+    Binary_tree test({ 400, 10 }, 2);
+    win.attach(test);
 
     win.wait_for_button();
 }
@@ -355,4 +454,46 @@ Octagon::Octagon(Point center, int radius)
 void Octagon::draw_specifics(Painter& painter) const
 {
     Polygon::draw_specifics(painter);
+}
+
+// Exercises 13-15
+Binary_tree::Binary_tree(Point root_xy, int ll)
+    : root { root_xy }, levels { ll }
+{
+    add_nodes();
+}
+
+void Binary_tree::draw_specifics(Painter& painter) const
+{
+    for (const auto& node : nodes)
+    {
+        painter.draw_ellipse(node, 10, 10);
+    }
+}
+
+void Binary_tree::set_child_points(Point xy)
+// xy should be the Point of the vector "nodes" member
+// xy is the parent node
+{
+    // Determine the lower left and right nodes
+    Point left_node {
+        (xy.x - static_cast<int>(line_length * std::cos(angle))),
+        (xy.y + static_cast<int>(line_length * std::sin(angle)))
+    };
+    Point right_node {
+        (xy.x + static_cast<int>(line_length * std::cos(angle))),
+        (xy.y + static_cast<int>(line_length * std::sin(angle)))
+    };
+
+    // Add them to the nodes vector
+    nodes.push_back(left_node);
+    nodes.push_back(right_node);
+};
+
+void Binary_tree::add_nodes()
+{
+    for (int i {0}; i < int_pow(2, levels); ++i)
+    {
+        set_child_points(nodes[i]);
+    }
 }
