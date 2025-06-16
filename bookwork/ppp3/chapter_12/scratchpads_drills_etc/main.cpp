@@ -137,6 +137,9 @@ struct Group
 };
 
 // Exercises 13-15
+
+// After two days I gave up... I'll come back to this exercise.
+
 // Power function to do 2^(levels)
 int int_pow(int base, int exp)
 {
@@ -156,16 +159,54 @@ public:
 
 private:
     void set_child_points(Point xy);
-    void add_nodes();
+    void add_children();
+    // void add_level();
 
     Point root {};                      // the Point of the root node
     int levels {0};                     // 0 = just the root node
-    std::vector<Point> nodes { root };  // Vector with the nodes' Points
+    std::vector<Point> nodes {};  // Vector with the nodes' Points
                                         // Initialized with the root node's points
 
     const double pi { 3.14159265359 };
     double angle { pi / 4 };            // the angle of lines going down from a node
     int line_length { 50 };             // the length of the connecting lines
+};
+
+// Exercise 17
+class Controller
+{
+public:
+    virtual void on() = 0;
+    virtual void off() = 0;
+    virtual void set_level(int n) = 0;
+    virtual int get_level() const = 0;
+    virtual string show_text() const = 0;
+    virtual void show() const = 0;
+};
+
+class sub_Con1 : public Controller
+{
+public:
+    void on() override { state_flag = true; }
+    void off() override { state_flag = false; }
+    void set_level(int n) override { level = n; }
+    int get_level() const override { return level; }
+    string show_text() const override { return state_flag ? "On" : "Off"; }
+    void show() const override {
+        std::cout << "Class is set to: " << show_text() << "\n";
+        std::cout << "The current level is: " << get_level() << "\n";
+    }
+private:
+    bool state_flag {true};         // true = on, false = off
+    int level {};
+};
+
+class sub_Con2 : public sub_Con1
+{
+public:
+    void lin_col(Shape& shape) {
+        shape.set_color(get_level());
+    }
 };
 
 using namespace Graph_lib;
@@ -249,9 +290,30 @@ int main(int /*argc*/, char * /*argv*/[])
     //     }
     // }
 
-    // Exercises 13-15
-    Binary_tree test({ 400, 10 }, 2);
-    win.attach(test);
+    // // Exercises 13-15
+    // // After two days I gave up... I'll come back to this exercise.
+    // Binary_tree test({ 400, 10 }, 1);
+    // win.attach(test);
+
+    // Exercise 17
+    sub_Con1 test1;
+    test1.show();
+    test1.set_level(3);
+    test1.off();
+    test1.show();
+
+    Rectangle rect {{ 100, 100 }, 100, 100};
+    win.attach(rect);
+    win.wait_for_button();
+
+    sub_Con2 test2;
+    test2.lin_col(rect);
+    win.wait_for_button();
+
+    test2.set_level(36);
+    test2.lin_col(rect);
+
+
 
     win.wait_for_button();
 }
@@ -460,7 +522,7 @@ void Octagon::draw_specifics(Painter& painter) const
 Binary_tree::Binary_tree(Point root_xy, int ll)
     : root { root_xy }, levels { ll }
 {
-    add_nodes();
+    nodes.push_back(root);
 }
 
 void Binary_tree::draw_specifics(Painter& painter) const
@@ -490,10 +552,24 @@ void Binary_tree::set_child_points(Point xy)
     nodes.push_back(right_node);
 };
 
-void Binary_tree::add_nodes()
-{
-    for (int i {0}; i < int_pow(2, levels); ++i)
-    {
-        set_child_points(nodes[i]);
-    }
-}
+// After two days I gave up... I'll come back to this exercise.
+
+
+// void Binary_tree::add_children()
+// {
+//     if (levels > 0)
+//     {
+//         for (int i {0}; i < int_pow(2, levels); ++i)
+//         {
+//             set_child_points(nodes[i]);
+//         }
+//     }
+// }
+
+// void Binary_tree::add_level()
+// {
+//     for (int i {0}; i < levels; ++i)
+//     {
+//         add_children();
+//     }
+// }
