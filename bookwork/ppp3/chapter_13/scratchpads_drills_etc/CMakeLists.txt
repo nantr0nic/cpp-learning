@@ -33,6 +33,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Programming_Qt
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        japanese-age-data.txt
+        japanese-age-data-1960.txt
     )
 
 # Define target properties for Android with Qt 6 as:
