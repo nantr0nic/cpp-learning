@@ -94,11 +94,6 @@ int main(int /*argc*/, char * /*argv*/[])
     ex14.age = 63;
     cout << "Name: " << ex14.name << "\n" << "Age: " << ex14.age << "\n";
 
-    // #15
-    Person ex15;
-    cin >> ex15;
-    cout << ex15;
-
 
     win.wait_for_button();
 }
