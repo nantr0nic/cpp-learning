@@ -134,7 +134,7 @@ int main()
     // Person ex19 {"Andy", 151};
 
     People roster;
-    cout << "Let's add people to our roster: (Name 'XXX' to stop)\n";
+    cout << "Let's add people to our roster: (Ctrl + D to exit)\n";
 
     Person temp;
     while (cin >> temp)
