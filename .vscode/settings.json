@@ -79,5 +79,6 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "expected": "cpp"
-    }
+    },
+    "cmake.ignoreCMakeListsMissing": true
 }

@@ -1,0 +1,10 @@
+-std=c++23
+-Wall
+-Wextra
+-Wnarrowing
+-Wconversion
+-pedantic
+-O2
+-fdiagnostics-color=always
+-g
+-I/usr/include/SFML

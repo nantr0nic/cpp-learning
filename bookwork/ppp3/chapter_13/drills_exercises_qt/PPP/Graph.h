@@ -151,6 +151,7 @@ protected:
 
     void add(Point p){ points.push_back(p); redraw();}
     void set_point(int i, Point p) { points[i] = p; redraw();}
+    void clear_points() { points.clear(); }
 public:
     void draw(Painter& painter) const;					// deal with color and draw_lines
 private:
