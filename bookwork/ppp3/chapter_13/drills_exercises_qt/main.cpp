@@ -1,5 +1,6 @@
 #include "PPP/Graph.h"
 #include "PPP/Simple_window.h"
+#include <fstream>
 
 // "Drills"
 double one(double) { return 1; }
@@ -66,6 +67,11 @@ public:
 
     void add_value(double val, string label = "", const Color& col = Color::invisible);
 
+    void change_color(int index, const Color& col)
+    {
+        colors[index] = col;
+    }
+
     void draw_specifics(Painter& painter) const override;
 
 private:
@@ -80,6 +86,36 @@ private:
     void determine_tallest();
     int determine_bar_height(double greatest_value, double value) const;
 };
+
+struct Height_data
+{
+    int height_group;
+    int height_group_total;
+};
+
+istream& operator>>(istream& is, Height_data& d)
+// assume format: { height_group : height_group_total }
+{
+    char ch1 = 0;
+    char ch2 = 0;
+    char ch3 = 0;
+    Height_data dd;
+
+    if (is >> ch1 >> dd.height_group
+        >> ch2 >> dd.height_group_total
+        >> ch3)
+    {
+        if (ch1 != '{' || ch2 != ':' || ch3 != '}')
+        {
+            is.clear(ios_base::failbit);
+        }
+        else
+        {
+            d = dd;
+        }
+    }
+    return is;
+}
 
 using namespace Graph_lib;
 int main(int /*argc*/, char * /*argv*/[])
@@ -207,12 +243,49 @@ int main(int /*argc*/, char * /*argv*/[])
     //     win.detach(convergence);
     // }
 
-    // Bar_graph test
-    Simple_window win {{ 100, 100}, 800, 600, "Bar_graph test"};
+    //////// Exercises 6 and 7 ////////////
 
-    Bar_graph test {{ 50, 500 }, 600, 400};
+    // // Bar_graph test
+    // Simple_window win {{ 100, 100}, 800, 600, "Bar_graph test"};
 
-    win.attach(test);
+    // Bar_graph test {{ 50, 500 }, 600, 400};
+    // test.add_value(50, "Value A", Color::cyan);
+    // test.add_value(100, "Second one", Color::blue);
+    // test.add_value(75, "This actually", Color::green);
+    // test.add_value(25, "Works!(?)", Color::red);
+    // win.attach(test);
+
+    ///////// Exercise 8 //////////
+
+    Simple_window win {{ 100, 100 }, 800, 600, "Exercise 8"};
+
+    // Open the file
+    string file_name = "/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_13/drills_exercises_qt/ex8.txt";
+    ifstream ifs { file_name };
+    if (!ifs)
+    {
+        Text err_label { Point{ 20, 20}, "Can't open file" };
+        win.attach(err_label);
+        win.wait_for_button();
+        error("can't open ", file_name);
+    }
+
+    // Make the bar graph object
+    Bar_graph height {{ 20, 500 }, 600, 400};
+
+    // Parse the file data and add values to bar graph object accordingly
+    for (Height_data hd; ifs >> hd; )
+    {
+        // For this exercise just assume the data is input correctly
+        height.add_value(hd.height_group_total, std::to_string(hd.height_group), Color::dark_green);
+    }
+
+    // Kinda cheating here but y'know...
+    height.change_color(1, Color::dark_red);
+    height.change_color(2, Color::dark_magenta);
+    height.change_color(4, Color::dark_cyan);
+
+    win.attach(height);
 
 
     win.wait_for_button();
@@ -287,6 +360,7 @@ void Fctn::reset_yscale(const double y)
 
 void Bar_graph::add_value(double val, string label, const Color& col)
 {
+    // Using vectors seems heavy but for times sake I think it works well
     values.push_back(val);
     labels.push_back(label);
     colors.push_back(col);
@@ -324,13 +398,18 @@ void Bar_graph::draw_specifics(Painter& painter) const
 
         for (size_t i = 0; i < values.size(); ++i)
         {
+            // Set the fill color first
+            painter.set_fill_color(colors[i]);
+
             // Draw the bar
             int rect_height = determine_bar_height(greatest_value, values[i]);
             int rect_x = m_origin.x + (rect_width * i);
             int rect_y = m_origin.y - rect_height;
             painter.draw_rectangle(Point(rect_x, rect_y), rect_width, rect_height);
 
-            // Deal with the label and color here
+            // Draw the label
+            Point label {(rect_x + (rect_width / 2) - (20)), (rect_y + rect_height + 10)};
+            painter.draw_text(label, labels[i]);
         }
     }
 }
