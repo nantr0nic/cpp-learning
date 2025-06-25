@@ -80,5 +80,10 @@
         "variant": "cpp",
         "expected": "cpp"
     },
-    "cmake.ignoreCMakeListsMissing": true
+    "cmake.ignoreCMakeListsMissing": true,
+    "cSpell.words": [
+        "Bjarne",
+        "FLTK",
+        "Haavard's"
+    ]
 }
