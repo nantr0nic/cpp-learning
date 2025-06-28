@@ -173,6 +173,9 @@ public:
         parent_window = win;
         set_parent_window(win);
     }
+
+    void update_point(int i, Point p) { set_point(i, p); }
+
     virtual ~Shape();
 	Shape(const Shape&) = delete;
 	Shape& operator=(const Shape&) = delete;

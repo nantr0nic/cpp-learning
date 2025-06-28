@@ -5,23 +5,23 @@
             "name": "Debug with CodeLLDB",
             "type": "lldb",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${fileDirname}/${fileBasenameNoExtension}_debug",
             "args": [],
             "cwd": "${fileDirname}",
             "stopOnEntry": false,
             "console": "integratedTerminal",
-            "preLaunchTask": "C/C++: clang++ build active file",
+            "preLaunchTask": "C/C++: clang++ build active file (Debug)",
             "sourceLanguages": ["cpp"],
             "initCommands": [
                 "settings set target.x86-disassembly-flavor intel"
             ],
             "postRunCommands": [
                 "settings set target.process.thread.step-avoid-regexp ^std::"
-            ]
+            ],
+            "terminal": "integrated"
         }
     ]
 }
-
 
 /*
 {

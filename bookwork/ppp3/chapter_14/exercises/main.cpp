@@ -4,6 +4,8 @@
 #include "PPP/Window.h"
 #include "PPP/Simple_window.h"
 
+#include <chrono>
+
 using namespace Graph_lib;
 
 // ----- Exercises 1 and 2 ----- //
@@ -85,6 +87,76 @@ private:
 
 };
 
+// ----- Exercise 6 ----- //
+struct A_clock : Window
+{
+public:
+    A_clock(int w=250, int h=250, const string& title = "Analogue Clock");
+
+private:
+    int hh, mm, ss;
+    double pi {3.14159};
+
+    Circle face;
+    Line hour;
+    Line minute;
+    Line second;
+
+    void update();
+};
+
+// ----- Exercise 7 ----- //
+struct Fly_cpp : Window
+{
+public:
+    Fly_cpp(int w=800, int h=600, const string& title = "Flying!!!");
+
+private:
+    string image_file {"/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_14/exercises/cpp.png"};
+    Image img;
+
+    Button start;
+    Button stop;
+    bool flying {true};
+
+    void update();
+    void change_state() { flying = !flying; };
+
+    inline int rand_int(int min, int max)
+    {
+        static default_random_engine ran;
+        return uniform_int_distribution<>{min, max}(ran);
+    }
+};
+
+// ----- Exercise 8 ----- //
+struct Converter : Window
+{
+public:
+    Converter(int w=400, int h=150, const string& title = "Currency Converter");
+
+private:
+    string currency_file {"/home/nantr0nic/code/cpp-learning/bookwork/ppp3/chapter_14/exercises/currencies.txt"};
+    In_box in_value;
+    Out_box out_value;
+
+    double in_vv;       // User input value
+    double out_vv;      // Final converted output
+    double in_c_vv;     // Input currency exchange
+    double out_c_vv;    // Output currency exchange
+
+    Menu currency_in_menu;
+    Menu currency_out_menu;
+
+    void convert();
+
+    string in_currency {};
+    string out_currency {};
+
+    vector<string> currencies;
+    vector<double> currency_values;
+};
+
 int main(int /*argc*/, char * /*argv*/[])
 {
     Application app;
@@ -95,7 +167,16 @@ int main(int /*argc*/, char * /*argv*/[])
     // Exercise3 ex3 {win};
     // win.wait_for_button();
 
-    Shapes_window win {app, { 100, 100 }, 800, 600, "Shapes Window"};
+    // Shapes_window win {app, { 100, 100 }, 800, 600, "Shapes Window"};
+
+    // // Exercise 6
+    // A_clock clock {};
+
+    // // Exercise 7
+    // Fly_cpp fly {};
+
+    // Exercise 8
+    Converter conv {};
 
 
     app.gui_main();
@@ -201,4 +282,177 @@ void Shapes_window::draw_triangle()
     shapes_menu.hide();
     user_shapes.push_back(make_unique<Triangle>(xy_loc, 50));
     this->attach(user_shapes[user_shapes.size() - 1]);
+}
+
+// ----- Exercise 6 ----- //
+A_clock::A_clock(int w, int h, const string& title)
+    : Window(w, h, title)
+    , face(Point{x_max() / 2, y_max() / 2}, 100)
+    , hour(face.center(), face.point(0))
+    , minute(face.center(), face.point(0))
+    , second(face.center(), face.point(0))
+{
+    // Set colors
+    face.set_fill_color(Color::black);
+    hour.set_color(Color::magenta);
+    minute.set_color(Color::white);
+    second.set_color(Color::cyan);
+    // Attach the shapes
+    attach(face);
+    attach(hour);
+    attach(minute);
+    attach(second);
+    // Create the timer that will update the clock
+    while (true)
+    {
+        update();
+        timer_wait(1000);
+    }
+}
+
+void A_clock::update()
+{
+    // Get the current time and update the h/m/s
+    auto now = std::chrono::system_clock::now();
+    auto time_t = std::chrono::system_clock::to_time_t(now);
+    auto* tm = localtime(&time_t);
+
+    int hh = tm->tm_hour % 12;    // 12-hour format
+    int mm = tm->tm_min;
+    int ss = tm->tm_sec;
+
+    // Redraw the lines accordingly
+
+    // Determine the end-points for each hand
+    // Calculate the angles
+    double hour_angle = (30 * hh) + (mm * 0.5);
+    double minute_angle = 6 * mm;
+    double second_angle = 6 * ss;
+
+    // End-points
+    /* I added update_point to Shape for efficiency. */
+    int hour_x = face.center().x + static_cast<int>((face.radius() / 2) * sin(hour_angle * pi / 180.0));
+    int hour_y = face.center().y - static_cast<int>((face.radius() / 2) * cos(hour_angle * pi / 180.0));
+    hour.update_point(1, Point(hour_x, hour_y));
+
+    int minute_x = face.center().x + static_cast<int>((face.radius() - (face.radius() * .2)) * sin(minute_angle * pi / 180.0));
+    int minute_y = face.center().y - static_cast<int>((face.radius() - (face.radius() * .2)) * cos(minute_angle * pi / 180.0));
+    minute.update_point(1, Point(minute_x, minute_y));
+
+    int second_x = face.center().x + static_cast<int>((face.radius()) * sin(second_angle * pi / 180.0));
+    int second_y = face.center().y - static_cast<int>((face.radius()) * cos(second_angle * pi / 180.0));
+    second.update_point(1, Point(second_x, second_y));
+}
+
+// ----- Exercise 7 ----- //
+Fly_cpp::Fly_cpp(int w, int h, const string& title)
+    : Window(w, h, title)
+    , img(Point{x_max() / 2, y_max() / 2}, image_file)
+    , start(Point{x_max() - 70, 0}, 50, 20, "Start", [this] { change_state(); })
+    , stop(Point{(x_max() - 70), 25}, 50, 20, "Stop", [this] { change_state(); })
+{
+    // Attach buttons
+    attach(start);
+    attach(stop);
+    // Scale and attach image
+    img.scale(100, 100);
+    attach(img);
+    // Flying loop
+    while (true)
+    {
+        timer_wait(250);
+        update();
+    }
+}
+
+void Fly_cpp::update()
+{
+    if (flying)
+    {
+        int move_x = rand_int(-10, 10);
+        int move_y = rand_int(-10, 10);
+        img.move(move_x, move_y);
+    }
+}
+
+// ----- Exercise 8 ----- //
+
+Converter::Converter(int w, int h, const string& title)
+    : Window(w, h, title)
+    , in_value(Point{60, 0}, 50, 20, "Input Value:", [this] { convert(); })
+    , out_value(Point{(x_max() / 2), 0}, "Output Value", Out_box::vertical)
+    , currency_in_menu(Point{0,0}, 50, 20, Menu::vertical, "Input Currency")
+    , currency_out_menu(Point{(x_max() - 55), 0}, 50, 20, Menu::vertical, "Output Currency")
+{
+    // Initialize strings here
+    in_currency = "USD";
+    out_currency = "EUR";
+    // In box
+    in_value.hide_buttons();
+    attach(in_value);
+    in_value.show();
+    // Out box
+    out_value.label.set_font_size(8);
+    out_value.data.set_font_size(8);
+    attach(out_value);
+    // Currency in menu
+    currency_in_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "USD", [this] { in_currency = "USD"; }));
+    currency_in_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "GBP", [this] { in_currency = "GBP"; }));
+    currency_in_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "ISK", [this] { in_currency = "ISK"; }));
+    currency_in_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "CUP", [this] { in_currency = "CUP"; }));
+    currency_in_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "EUR", [this] { in_currency = "EUR"; }));
+    attach(currency_in_menu);
+    // Currency out menu
+    currency_out_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "USD", [this] { out_currency = "USD"; }));
+    currency_out_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "GBP", [this] { out_currency = "GBP"; }));
+    currency_out_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "ISK", [this] { out_currency = "ISK"; }));
+    currency_out_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "CUP", [this] { out_currency = "CUP"; }));
+    currency_out_menu.attach(make_unique<Button>(Point{0,0}, 0, 0, "EUR", [this] { out_currency = "EUR"; }));
+    attach(currency_out_menu);
+
+    // Get the currency information from file and set it up here
+    // We will add them to vectors to make calculation easier
+    ifstream ifs {currency_file};
+    if (ifs.is_open())
+    {
+        string line;
+        while (getline(ifs, line))
+        {
+            istringstream iss {line};
+            string curr {};
+            char c {};
+            double value {};
+            iss >> curr >> c >> value;
+            currencies.push_back(curr);
+            currency_values.push_back(value);
+        }
+    }
+}
+
+void Converter::convert()
+{
+    for (size_t i = 0; i < currencies.size(); ++i)
+    {
+        if (in_currency == currencies[i])
+        {
+            in_c_vv = currency_values[i];
+        }
+        if (out_currency == currencies[i])
+        {
+            out_c_vv = currency_values[i];
+        }
+    }
+    if (in_value.last_result() == In_box::accepted)
+    {
+        // Get the input value
+        string s = in_value.last_string_value();
+        istringstream vss { s };
+        vss >> in_vv;
+        // Conversion formula
+        out_vv = (in_vv * (1/in_c_vv)) * out_c_vv;
+        // Put the output
+        ostringstream oss;
+        oss << out_vv;
+        out_value.put(oss.str());
+    }
 }
