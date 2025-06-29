@@ -115,6 +115,19 @@ int main()
     std::cout << "num2_np1 is " << num2_np1 << '\n';    // pointer to heap memory
     std::cout << "*num2_np1 is " << *num2_np1 << '\n';  // de-referenced, int value 9
     std::cout << "&num2_np1 is " << &num2_np1 << "\n\n";// (stack) memory of itself
+    delete num2_np1;
+    int* ipa = new int[4] {6, 7, 8, 9};
+    std::cout << "ipa is " << ipa << '\n';
+    std::cout << "&ipa is " << &ipa << '\n';
+    std::cout << "*ipa is " << *ipa << "\n\n";
+    std::cout << "now printing the subscript-accessed 'elements' of ipa:\n";
+    for (int i = 0; i < 4; ++i)
+    {
+        std::cout << "ipa[" << i << "] is " << ipa[i] << '\n';
+        std::cout << "&ipa[" << i << "] is " << &ipa[i] << '\n';
+        std::cout << "*ipa[" << i << "] requires indirection. \n\n";
+    }
 
+    delete[] ipa;
     return 0;
 }
