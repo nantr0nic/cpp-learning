@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 
 // First iteration of Link
 class Link {
@@ -27,7 +28,7 @@ Link* insert_incomplete(Link* p, Link* n)      // insert n before p (incomplete)
     return n;
 }
 
-Link* add(Link* p, Link* n)      // insert n before p; return n
+Link* insert(Link* p, Link* n)      // insert n before p; return n
 {
     if (n == nullptr)
         return p;
@@ -38,6 +39,20 @@ Link* add(Link* p, Link* n)      // insert n before p; return n
         p->prev->succ = n;
     n->prev = p->prev; // p's predecessor becomes n's predecessor
     p->prev = n;        // n becomes p's predecessor
+    return n;
+}
+
+Link* add(Link* p, Link* n)         // insert n after p; return n
+{
+    if (n == nullptr)
+        return p;
+    if (p == nullptr)
+        return n;
+    n->prev = p;            // p comes before n
+    n->succ = p->succ;      // push p's successor to be n's successor (including nullptr)
+    if (p->succ)
+        p->succ->prev = n;  // p's successor's predecessor becomes n
+    p->succ = n;            // p's successor becomes n
     return n;
 }
 
@@ -85,6 +100,18 @@ Link* advance(Link* p, int n)   // move n positions in list; return nullptr for 
     return p;
 }
 
+void print_all(Link* p)
+{
+    std::cout << "{ ";
+    while (p)
+    {
+        std::cout << p->value;
+        if ((p = p->succ))
+            std::cout << ", ";
+    }
+    std::cout << " }";
+}
+
 int main()
 {
     // // First Link build...
@@ -98,10 +125,40 @@ int main()
     // norse_gods = new Link{"Freja", nullptr, norse_gods};
     // norse_gods->succ->prev = norse_gods;
 
-    // Second Link build now using add()
+    // // Second Link build now using insert()
+    // Link* norse_gods = new Link{"Thor"};
+    // norse_gods = insert(norse_gods, new Link{"Odin"});
+    // norse_gods = insert(norse_gods, new Link{"Freja"});
+
+    // ----- 15.7.2 ----- //
     Link* norse_gods = new Link{"Thor"};
-    norse_gods = add(norse_gods, new Link{"Odin"});
-    norse_gods = add(norse_gods, new Link{"Freja"});
+    norse_gods = insert(norse_gods, new Link{"Odin"});
+    norse_gods = insert(norse_gods, new Link{"Zeus"});
+    norse_gods = insert(norse_gods, new Link{"Freja"});
+
+    Link* greek_gods = new Link{"Hera"};
+    greek_gods = insert(greek_gods, new Link{"Athena"});
+    greek_gods = insert(greek_gods, new Link{"Mars"});
+    greek_gods = insert(greek_gods, new Link{"Poseidon"});
+
+    Link* p = find(greek_gods, "Mars");
+    if (p)
+        p->value = "Ares";
+
+    Link* q = find(norse_gods, "Zeus");
+    if (q)
+    {
+        if (q == norse_gods)
+            norse_gods = q->succ;
+        erase(q);
+        greek_gods = insert(greek_gods, q);
+    }
+
+    print_all(norse_gods);
+    std::cout << '\n';
+
+    print_all(greek_gods);
+    std::cout << '\n';
 
     return 0;
 }
