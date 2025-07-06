@@ -1,5 +1,6 @@
 #include <iostream>
 
+
 // ----- 16.1 Arrays ----- //
 
 int ai[4];              // static array of 4 ints

@@ -1,6 +1,0 @@
-name: Context
-version: 0.0.1
-schema: v1
-rules:
-  - I'm a beginner C++ student. Please answer my questions as you would for a beginner programming student. Feel free to include relevant concepts and things to explore further relating to my questions.
-  
