@@ -37,7 +37,7 @@ std::string cat(const std::string& name, const std::string& addr)
 
 char* cat2(const char* name, const char* addr)
 {
-    int nsz = strlen(name);             // name size
+    size_t nsz = strlen(name);             // name size
     int sz = nsz + strlen(addr) + 2;    // size - +2 for '@' and the terminating zero
     char* res = (char*)malloc(sz);      // using the old allocation function
     strcpy(res, name);                  // copy from *name to *res until a zero is seen
