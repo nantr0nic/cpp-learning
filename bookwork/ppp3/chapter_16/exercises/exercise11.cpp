@@ -34,6 +34,13 @@ bool is_palindrome_string2(const std::string& s)
 bool is_palindrome_a(const char s[])
 {
     size_t sSize {strlen(s)};
+    // #12
+    if (sSize >= 16)
+    {
+        std::println("{} is too long! Returning FALSE.", s);
+        return false;;
+    }
+
     char* sCopy {new char[sSize + 1]};
     for (size_t i = sSize, j = 0; i > 0; --i, ++j)
     {
