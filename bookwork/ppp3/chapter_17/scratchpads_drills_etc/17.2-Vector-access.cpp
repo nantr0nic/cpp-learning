@@ -6,7 +6,8 @@
 
 class Vector {                  // a very simplified vector of doubles
 public:
-    Vector(int s);              // constructor: allocate elements to the heap and initialize them
+    Vector() : sz{ 0 }, elem{ nullptr } { };    // empty constructor
+    explicit Vector(int s);              // constructor: allocate elements to the heap and initialize them
     Vector(std::initializer_list<double> lst);  // initializer-list constructor
 
     ~Vector();                  // destructor: return elements to free store (heap)
@@ -76,7 +77,7 @@ int main()
 }
 
 
-
+// Constructor (int)
 Vector::Vector(int s)           // constructor
     : sz { s }                  // initialize sz
     , elem { new double[static_cast<unsigned long>(s)] }    // initialize elem to elements on the free store
@@ -87,6 +88,7 @@ Vector::Vector(int s)           // constructor
     }
 }
 
+// Constructor (initializer_list)
 Vector::Vector(std::initializer_list<double> lst)
     : sz {static_cast<int>(lst.size())}
     , elem {new double[static_cast<unsigned long>(sz)]}
@@ -94,11 +96,13 @@ Vector::Vector(std::initializer_list<double> lst)
     std::copy(lst.begin(), lst.end(), elem);
 }
 
+// Destructor
 Vector::~Vector()               // destructor
 {
     delete[] elem;              // return elements to free store (heap)
 }
 
+// Copy constructor
 Vector::Vector(const Vector& arg)           // allocate elements, then initialize them by copying
     : sz { arg.sz }
     , elem { new double[static_cast<unsigned long>(arg.sz)] }
@@ -106,6 +110,7 @@ Vector::Vector(const Vector& arg)           // allocate elements, then initializ
     std::copy(arg.elem, arg.elem+sz, elem); // copy elements [0:sz) from arg.elem into elem]
 }
 
+// Copy assignment
 Vector& Vector::operator=(const Vector& a)  // make this Vector a copy of a
 {
     double* p = new double[static_cast<unsigned long>(a.sz)]; // allocate new space
@@ -114,4 +119,27 @@ Vector& Vector::operator=(const Vector& a)  // make this Vector a copy of a
     elem = p;                                                 // now we can reset elem
     sz = a.sz;
     return *this;                                             // return a self-reference
+}
+
+// Move constructor
+Vector::Vector(Vector&& arg)
+    : sz { arg.sz }
+    , elem { arg.elem }         // copy arg's elem and sz
+{
+    arg.sz = 0;                 // make arg the empty Vector
+    arg.elem = nullptr;
+}
+
+// Move assignment
+Vector& Vector::operator=(Vector&& arg)     // move arg to this Vector
+{
+    if (this != &arg)                       // protect against self-assignment (v=v)
+    {
+        delete[] elem;                      // deallocate old space
+        elem = arg.elem;                    // copy arg's elem and sz
+        sz = arg.sz;
+        arg.elem = nullptr;                 // make arg the empty Vector
+        arg.sz = 0;
+    }
+    return *this;                           // return a self-reference
 }
