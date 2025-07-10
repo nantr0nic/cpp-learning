@@ -11,20 +11,20 @@ struct X
         std::cout << this << "->" << s << ": " << val << " (" << nv << ")\n";
     }
 
-    X() { out("X() ", 0); val =0; }                                         // default constructor
+    X() { out("X() ", 0); val = 0; }                                        // default constructor
     X(int x) { out("X(int) ", x); val = x; }
     X(const X& x) { out ("X(X&) ", x.val); val = x.val; }                   // copy constructor
     X(X&& x) { out("X(X&&) ", x.val); val = x.val; x.val = 0; }             // move constructor
     X& operator=(const X& x) {                                              // copy assignment
-        out("X copy assignment ", x.val); val=x.val; return *this; 
+        out("X copy assignment ", x.val); val = x.val; return *this; 
     }
     X& operator=(X&& x) {                                                   // move assignment
-        out("X move assignment ", x.val); val=x.val; x.val=0; return *this; 
+        out("X move assignment ", x.val); val = x.val; x.val = 0; return *this; 
     }
     ~X() { out("~X() ", 0); }                                               // destructor
 };
 
-X glob { 2 };               // a global variable        //$ 0x55a93f991084->X(int) : 0 (2)
+X glob { 2 };               // a global variable        
 
 X copy(X a) { std::cout << "copy()\n"; return a; }
 X copy2(X a) { std::cout << "copy2()\n"; X aa = a; return aa; }
@@ -37,7 +37,7 @@ int main()
 {
     X loc{ 4 };             // local variable           //$ 0x7ffd05a233ac->X(int) : 0 (4)
     X loc2{ loc };          // copy construction        //$ 0x7ffd05a233a8->X(X&) : 0 (4)
-    loc = static_cast<const X&>(X{ 5 });  // copy assignment  //$ cast to actually copy assign
+    loc = X{ 5 };  // copy assignment  //$ cast to actually copy assign (when move is ops uncommented)
     loc2 = copy(loc);       // call by value and return
     loc2 = copy2(loc);
     X loc3{ 6 };                                        //$ 0x7ffd05a2339c->X(int) : 0 (6)
