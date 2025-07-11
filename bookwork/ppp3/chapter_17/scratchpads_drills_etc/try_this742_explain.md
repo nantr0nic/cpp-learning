@@ -34,4 +34,12 @@ The move constructor will move val from 'temp' directly to local_x as opposed to
 > **_Note =>_** Modern compilers (mine included: Clang 20.1.7) often apply **Return Value Optimization (RVO)** and can "eliminate the move constructor call entirely and instead construct the object directly in the caller's memory". 
 In our code, this constructor will have out() print X(X&&), set val (of ```this`) to x's val, then set x's val to zero after copying is complete (preparing it for deletion).
 
-+ **Line 13:** ```X& operator=(const X& x)``` 
++ **Line 13:** ```X& operator=(const X& x)``` is the **copy assignment operator**. It is an overload of the assignment operator that is called when assigning an existing object to another already existing object. For example:
+```cpp
+X object1(3);
+X object2(5);
+object1 = object2;  // object 2 is copied to object 1, thus object2.val = 5
+```
+It differs from a regular copy constructor by the pre-existence of the class object that is being copied-to. Also, this is the first of our essential operations that takes a reference to the class type (X&) and returns a dereferenced ```this```. This allows for assignment chaining (as all built-in types allow), for example: ```xObject1 = xObject2 = xObject3 = X{ 5 };```. Also, returning by reference avoids creating temporary (unnecessary) copies as would be done if the copy assignment operator returned by value. In our code, out() prints "X copy assignment", the current value of ```this``` (which in this case may be non-zero since it is a pre-existing object!) and the new value being assigned to it.
+
++ **Line 16:**
