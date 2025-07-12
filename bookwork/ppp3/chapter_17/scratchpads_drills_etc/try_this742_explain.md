@@ -161,7 +161,7 @@ This function allows us to make new X objects like so: ```X* object1 = make(4);`
   3. The temporary object (rvalue) is then move-assigned to ```loc2``` (line 10 of output)
 
 + **Line 43:** This is similar to line 42 but in copy2() a second local X object is copy constructed from the parameter and that local object is then returned. In copy2():
-  1. A local X object is copy constructed from passed-by-value ```loc`` (line 13 of output)
+  1. A local X object is copy constructed from passed-by-value ```loc``` (line 13 of output)
   2. Local X object named ```aa``` is copy constructed from the previous local object (line 15 of output)
   3. ```aa``` is returned and is move-assigned to ```loc2```
 > **_Note =>_** A subtle distinction here is that in copy2(), ```aa``` is a named **local** object within the scope of that function, however -- without optimizations -- when it is returned by the function an expression-scoped **temporary** object is created (an _rvalue_) that is then move-assigned to the lvalue. (Expression-scoped meaning, in this case, the expression ```loc2 = copy2(loc)```.) That means that one might/should see a move constructor being called to move-construct that returned temporary object from the function's internal local object. It is the case though that I compiled this with an -O2 flag and because of RVO (described above) this set of instructions was optimized away. What this optimization does is skip the creation of the temporary object entirely and instead move-assigns ```aa``` to ```loc2```. I admit I regret using the -O2 flag and would like to have written this document with a -O0 flag but I'm too far in (for now) to make this revision. I will attempt a second document explaining a -O0 compilation at a later time.
