@@ -43,11 +43,11 @@ int main()
     loc2 = copy2(loc);
     X loc3{ 6 };                                        
     X& r = ref_to(loc);     // call by reference and return
-    delete make(7);
-    delete make(8);
+    delete make(7);         // make(7) then delete
+    delete make(8);         // same but int 8
     std::vector<X> v(4);    // default values
     XX loc4;                                            
-    X* p = new X{ 9 };      // an X on the free store   
+    X* p = new X{ 9 };      // an X on the free store (heap)  
     delete p;                                           
     X* pp = new X[5];       // an array of Xs on the free store
     delete[] pp;
