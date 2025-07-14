@@ -217,7 +217,7 @@ This function allows us to make new X objects like so: ```X* object1 = make(4);`
   1. First calls ```make()```, passing int value 7
   2. ```make()``` then creates a function-scoped, stack-allocated local X object named ```a``` that is initialized with the passed value (i.e. 7) -- thus calling X's int constructor (output line 22)
   3. Then, in ```make()```'s return... 
-     1. ```new``` allocates 4 bytes of heap memory: large enough to fit X's single int data member -- the compiler determines this by calling ```sizeof(X)``` at runtime
+     1. ```new``` allocates 4 bytes of heap memory: large enough to fit X's single int data member -- the compiler determines this by "knowing" ```sizeof(X)``` at runtime 
      2. an X object is copy constructed from the local object ```a``` at that address (line 23)
      3. ```new``` returns a pointer to that memory address
   4. ```make()``` completes, returning the pointer to that (unnamed) heap-allocated X object -- it is at this point that the destructor for ```a``` is called (line 24)
