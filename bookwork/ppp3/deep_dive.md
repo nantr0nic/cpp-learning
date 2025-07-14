@@ -110,7 +110,7 @@ X global{ 2 };
 int main()
 {
     X* dynamic = new X(5); 
-    delete dynamic; // <-- destructor is called for xPtr here
+    delete dynamic; // <-- destructor is called for dynamic here
 
     for (int i = 0; i < 3; ++i)
     {
