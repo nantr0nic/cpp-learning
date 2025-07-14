@@ -249,7 +249,7 @@ However, in our output log, all we see is that ```X(int)``` is being called at a
 ![Lines 50 and 51](try_this_images/out50-51.png)
   
 + **Line 52:** This line allocates an array of 5 X objects on the heap then initialized ```pp``` to point to (the first element of) that array. The order of instruction is similar to line 50 except that:
-  1. ```new[]``` allocates **20** bytes of memory -- 5 contiguous blocks of 4 bytes each to fit the 5 X objects. The compiler determines the array size at compile time by calling ```(5 * sizeof(X))``` and then (typically) stores that size as metadata at the address right before the first array element (the "header")
+  1. ```new[]``` allocates **20** bytes of memory -- 5 contiguous blocks of 4 bytes each to fit the 5 X objects. The compiler determines the array size at compile time by "knowing" ```(5 * sizeof(X))``` and then (typically) stores that size as metadata at the address right before the first array element (the "header")
   2. Then the 5 X objects are sequentially produced via the default constructor (since no value is being passed) at those addresses
   3. ```new[]``` returns a pointer to the first element of the array (i.e. pp[0])
   4. ```pp``` is initialized with the pointer to the first element returned by ```new[]```
