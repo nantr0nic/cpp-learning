@@ -59,7 +59,7 @@ int main()
     // local_x.val will be 5
 }
 ```
-> **_Note =>_** Modern compilers (mine included: Clang 20.1.7) often apply **Return Value Optimization (RVO)**(explained below) and can "eliminate the move constructor call entirely and instead construct the object directly in the caller's memory".
+> **_Note =>_** Modern compilers (mine included: Clang 20.1.7) often apply **Return Value Optimization (RVO)** (explained below) and can "eliminate the move constructor call entirely and instead construct the object directly in the caller's memory".
 
 The move constructor will move ```val``` from ```temp``` directly to ```local_x``` as opposed to creating a complete X object ```temp```, then copy ```temp``` to ```local_x```, then delete ```temp```. Instead of creating the unnecessary copy of ```temp```, it moves the values of ```temp``` to the caller (in this case ```local_x```). While seemingly not a heavy operation in this example, the same would be applied to (for example) a vector of 100 elements of >16 character strings where the consequences of an unnecessary copy are more severe. This is explained in more detail below.
 > **_Also!_** The move constructor (and the move assignment operator below) put the moved-from object into a "valid but unspecified state" when it sets that object to the default value of 0. The moved-from object is thus ready for destruction but can also be re-used -- it should not, however, be read from (in our code it will simply print zero but in other code it could perhaps be a nullptr or false value, etc.).
