@@ -152,8 +152,8 @@ Matrix operator+(const Matrix& m1, const Matrix& m2)
  *                                  main()                                      *
  *                                                                              *
  * Disclaimer: I used an AI to write the tests in main() to save time (its late)*
- *              and to make sure each operation is thoroughly tested            *
- *              but I did add a test to test features I added later             *
+ *              and to make sure each operation is thoroughly tested.           *
+ *              I did add a couple tests to test features I added later         *
  * Also: to properly test all copy/move semantics, utilize multi-argument [],   *
  *       and make use of std::println / std::print, compile with the flags:     *
  * (if using g++)       -fno-elide-constructors -O0 -std=c++23                  *
