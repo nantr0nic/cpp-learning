@@ -303,6 +303,12 @@ try {
 }
 
 
+/*********************************
+ *                               *
+ *   The "Essential Operations"  *
+ *                               *
+ *********************************/
+
 
 // two argument constructor
 Matrix::Matrix(int r, int c)
