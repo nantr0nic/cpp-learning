@@ -100,8 +100,8 @@ public:
     double* begin() { return p; }        // will return the first element
     double* end() { return p + size; }   // will return the address one past the last element
     // And, the const versions
-    const double* begin() { return p; }
-    const double* end() { return p + size; }
+    const double* begin() const { return p; }
+    const double* end() const { return p + size; }
 
 private:
     size_t size;
@@ -118,10 +118,12 @@ int main()
 {
     Container c(6);
     
-    for (auto& i : c)   // will set each element in c to 0.0
+    for (auto& i : c)        // will set each element in c to 0.0
         i = 0.0;
 
-    print_container(c); // this will use the const version of begin() and end()
+    print_container(c);      // this will use the const version of begin() and end()
+
+    std::println("{}", c);   // this also uses begin() and end()!
 
     return 0;
 }
