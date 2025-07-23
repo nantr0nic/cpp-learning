@@ -1,0 +1,29 @@
+CompileFlags:
+  Add:
+    - "-std=c++23"
+    - "-stdlib=libc++"
+    - "-fmodule-file=std=/home/nantr0nic/code/cpp-learning/std.pcm"
+    - "-Wno-reserved-identifier"
+    - "-Wno-reserved-module-identifier"
+Diagnostics:
+  Suppress:
+  #  - "module_not_found"
+    - "unknown_typename"
+  ClangTidy:
+    Add:
+      - "bugprone-*"
+      - "modernize-use-auto"
+      - "modernize-loop-convert"
+      - "performance-for-range-copy"
+      - "readability-const-return-type"
+      - "cppcoreguidelines-init-variables"
+      - "misc-const-correctness"              
+      - "readability-container-size-empty"    
+      - "performance-unnecessary-copy-initialization"  
+    Remove:
+      - "readability-redundant-access-specifiers"
+      - "modernize-use-nodiscard"
+      - "modernize-use-trailing-return-type"
+      - "cppcoreguidelines-pro-bounds-pointer-arithmetic"
+      - "cppcoreguidelines-avoid-magic-numbers"
+      - "performance-noexcept-move-constructor"

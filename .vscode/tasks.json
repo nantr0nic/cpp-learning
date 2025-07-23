@@ -6,18 +6,40 @@
             "command": "/usr/bin/clang++",
             "args": [
                 "-std=c++23",
+                "-stdlib=libc++",
+                "-fmodule-file=std=${workspaceFolder}/std.pcm",
                 "-Wall",
                 "-Wextra",
                 "-Wnarrowing",
                 "-Wconversion",
+                "-Wsign-conversion",
                 "-pedantic",
+                "-Wshadow",
+                "-Wformat=2",
+                "-Wcast-align",
+                "-Wcast-qual",
+                "-Wctor-dtor-privacy",
+                "-Wmissing-include-dirs",
+                "-Wnoexcept",
+                "-Wold-style-cast",
+                "-Woverloaded-virtual",
+                "-Wredundant-decls",
+                "-Wsign-promo",
+                "-Wundef",
+                "-Wunreachable-code",
+                "-Wunused",
+                "-Wvariadic-macros",
+                "-Wno-missing-field-initializers",
+                "-fsanitize=address",
+                "-fsanitize=undefined",
+                "-fsanitize=bounds",
                 "-O0",
                 "-g",
                 "-fdiagnostics-color=always",
                 "${file}",
+                "${workspaceFolder}/std.pcm",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}_debug",
-                "-L/usr/lib"
+                "${fileDirname}/${fileBasenameNoExtension}_debug"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -34,18 +56,37 @@
             "command": "/usr/bin/clang++",
             "args": [
                 "-std=c++23",
+                "-stdlib=libc++",
+                "-fmodule-file=std=${workspaceFolder}/std.pcm",
                 "-Wall",
                 "-Wextra",
                 "-Wnarrowing",
                 "-Wconversion",
                 "-pedantic",
+                "-Wshadow",
+                "-Wformat=2",
+                "-Wcast-align",
+                "-Wcast-qual",
+                "-Wctor-dtor-privacy",
+                "-Wmissing-include-dirs",
+                "-Wnoexcept",
+                "-Wold-style-cast",
+                "-Woverloaded-virtual",
+                "-Wredundant-decls",
+                "-Wsign-conversion",
+                "-Wsign-promo",
+                "-Wundef",
+                "-Wunreachable-code",
+                "-Wunused",
+                "-Wvariadic-macros",
+                "-Wno-missing-field-initializers",
                 "-O2",
                 "-DNDEBUG",
                 "-fdiagnostics-color=always",
                 "${file}",
+                "${workspaceFolder}/std.pcm",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}",
-                "-L/usr/lib"
+                "${fileDirname}/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -58,7 +99,89 @@
                 "isDefault": true
             },
             "detail": "Release build with optimization"
-        }
+        },
+        {
+            "type": "shell",
+            "label": "Run clang-tidy analysis",
+            "command": "clang-tidy",
+            "args": [
+                "${file}",
+                "--",
+                "-std=c++23",
+                "-stdlib=libc++",
+                "-fmodule-file=std=${workspaceFolder}/std.pcm"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "detail": "Run comprehensive static analysis with clang-tidy"
+        },
+        {
+            "label": "Toggle Learning Mode (clangd config)",
+            "type": "shell",
+            "command": "cp",
+            "args": [".clangd-learning", ".clangd"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "detail": "Switch to learning-focused clang-tidy configuration"
+        },
+        {
+            "label": "Toggle Strict Mode (clangd config)", 
+            "type": "shell",
+            "command": "cp",
+            "args": [".clangd-strict", ".clangd"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "detail": "Switch to comprehensive clang-tidy analysis"
+        },
+        {
+            "type": "shell",
+            "label": "Show Config File",
+            "command": "head",
+            "args": ["-10", ".clangd"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "detail": "Display current clangd config file contents"
+        },
+        {
+            "type": "shell",
+            "label": "Show Current clangd Config",
+            "command": "echo",
+            "args": [
+                "Current clangd configuration:"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "detail": "Display which clangd configuration is currently active",
+            "dependsOn": "Show Config File"
+        },
     ],
     "version": "2.0.0"
 }

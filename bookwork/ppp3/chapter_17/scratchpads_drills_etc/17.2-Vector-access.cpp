@@ -1,8 +1,8 @@
 //$ ----- 17 Essential Operations (Vector) ----- //
 
-#include <initializer_list>
-#include <print>
-#include <iostream>
+import std;
+
+using std::size_t;
 
 class Vector {                  // a very simplified vector of doubles
     /*

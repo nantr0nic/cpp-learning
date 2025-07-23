@@ -1,0 +1,24 @@
+CompileFlags:
+  Add:
+    - "-std=c++23"
+    - "-stdlib=libc++"
+    - "-fmodule-file=std=/home/nantr0nic/code/cpp-learning/std.pcm"
+    - "-fprebuilt-module-path=."
+    - "-fmodules"
+    - "-fcxx-modules"
+    - "-Wno-reserved-identifier"
+    - "-Wno-reserved-module-identifier"
+Diagnostics:
+  Suppress:
+  #  - "module_not_found"
+    - "unknown_typename"
+  ClangTidy:
+    Add:
+      - "readability-*"
+      - "modernize-*"
+      - "performance-*"
+      - "cppcoreguidelines-*"
+    Remove:
+    #- "readability-magic-numbers"           
+    - "cppcoreguidelines-avoid-magic-numbers"
+    - "modernize-use-trailing-return-type"  # Style preference

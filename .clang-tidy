@@ -1,0 +1,7 @@
+Checks: 'bugprone-*,modernize-use-auto,modernize-loop-convert,performance-for-range-copy,readability-const-return-type,cppcoreguidelines-init-variables'
+WarningsAsErrors: ''
+HeaderFilterRegex: '.*'
+FormatStyle: none
+CheckOptions:
+  - key: FastCheckFilter
+    value: None
