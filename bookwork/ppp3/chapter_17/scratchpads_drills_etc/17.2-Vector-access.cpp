@@ -225,7 +225,7 @@ void Vector::reserve(int newalloc)
 {
     if (newalloc <= space)                  // never decrease allocation
         return;
-    double* p = new double[static_cast<size_t>(newalloc)]; // allocate new space
+    auto* p = new double[static_cast<size_t>(newalloc)]; // allocate new space
     for (int i = 0; i < sz; ++i)            // copy old elements
         p[i] = elem[i];
     delete[] elem;                          // deallocate old space

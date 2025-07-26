@@ -6,11 +6,10 @@ CompileFlags:
     - "-Wno-reserved-identifier"
     - "-Wno-reserved-module-identifier"
 Diagnostics:
-  # Suppress:
+  Suppress:
   #  - "module_not_found"
-  #  - "unknown_typename"
+    - "unknown_typename"
   ClangTidy:
-    FastCheckFilter: None
     Add:
       - "bugprone-*"
       - "modernize-use-auto"

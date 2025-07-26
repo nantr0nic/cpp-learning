@@ -1,17 +1,16 @@
 import std;
 
 template<typename T>
-class allocator 
+class Allocator 
 {
 public:
-    // ...
     // allocate space for n objects of type T
     T* allocate(int n) {             
         if (n <= 0)
         {
             return nullptr;
         }
-        std::size_t bytes{ (sizeof(T) * static_cast<std::size_t>(n)) };
+        std::size_t bytes{ sizeof(T) * static_cast<std::size_t>(n) };
         return static_cast<T*>(std::malloc(bytes));
     }
     // deallocate n objects of type T starting at p
@@ -22,4 +21,3 @@ public:
         }
     }
 };
-
