@@ -155,7 +155,7 @@ Vector<T, A>::Vector(const Vector<T, A>& orig)
 {
     if (orig.sz > 0)
     {
-        elem = alloc.allocate(space);
+        elem = alloc.allocate(static_cast<std::size_t>(space));
         std::uninitialized_copy(orig.begin(), orig.end(), elem);
     }
     else
@@ -257,7 +257,7 @@ Vector<T, A>::~Vector()
     // Deallocate using the allocator
     if (elem != nullptr)
     {
-        alloc.deallocate(elem, space);
+        alloc.deallocate(elem, static_cast<std::size_t>(space));
     }
 }
 
@@ -272,7 +272,7 @@ T& Vector<T, A>::at(int n)
 {
     if (n < 0 || sz <= n)
     {
-        throw std::invalid_argument("[!] Out of bounds [!]\n");
+        throw std::out_of_range("[!] Out of bounds [!]\n");
     }
     return elem[n];
 }
@@ -282,7 +282,7 @@ const T& Vector<T, A>::at(int n) const
 {
     if (n < 0 || sz <= n)
     {
-        throw std::invalid_argument("[!] Out of bounds! [!]\n");
+        throw std::out_of_range("[!] Out of bounds! [!]\n");
     }
     return elem[n];
 }
@@ -297,12 +297,12 @@ void Vector<T, A>::reserve(int newalloc)
     if (newalloc <= space)                  // never decrease allocation
         return;
 
-    T* p = alloc.allocate(newalloc);        // allocate new space
+    T* p = alloc.allocate(static_cast<std::size_t>(newalloc));        // allocate new space
     std::uninitialized_move(elem, elem + sz, p);
 
     // clear up memory before transfering ownership of p to this
     std::destroy(elem, elem + sz);
-    alloc.deallocate(elem, space);
+    alloc.deallocate(elem, static_cast<std::size_t>(space));
 
     elem = p;                               // make elem point to new memory
     space = newalloc;
