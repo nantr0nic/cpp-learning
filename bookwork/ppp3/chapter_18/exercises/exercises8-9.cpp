@@ -17,7 +17,7 @@ public:
         {
             return nullptr;
         }
-        std::size_t bytes{ sizeof(T) * static_cast<std::size_t>(n) };
+        const std::size_t bytes{ sizeof(T) * static_cast<std::size_t>(n) };
         return static_cast<T*>(std::malloc(bytes));
     }
     // deallocate n objects of type T starting at p

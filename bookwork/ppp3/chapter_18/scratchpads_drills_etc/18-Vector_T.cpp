@@ -1,4 +1,5 @@
 //$ ----- Chapter 18 Vector stuff ----- //
+#include <memory>
 import std;
 
 // global variable for educational reasons... 
@@ -37,6 +38,7 @@ public:
 
     void resize(int newsize, T val = T{});
     void push_back(const T& val);
+    void push_front(const T& val);      // chapter 19 exercise
     void reserve(int newalloc);
 
     T* begin() const { return elem; }
@@ -82,6 +84,11 @@ int main()
     std::println("{}", aVectorVector);
 
     std::println("Omg it does :) <3 !!!");
+
+    std::println("Let's test push_front");
+
+    some_words.push_front("push_front works!");
+    std::println("{}", some_words);
     
     return 0;
 }
@@ -334,3 +341,21 @@ void Vector<T, A>::push_back(const T& val)
     std::construct_at(&elem[sz], val);
     ++sz;
 }
+
+// this is added from a "try this" exercise in chapter 19
+template<Element T, typename A>
+void Vector<T, A>::push_front(const T& val)
+{
+    /* I think the only way this is possible, since heap allocated and contiguous, 
+    * is to copy it and add val as the first element. */
+    T* p = alloc.allocate(sz + 1); // make new space + 1 for new element
+    std::uninitialized_move(elem, elem + sz, p + 1);         // copy old to new space but at 2nd spot
+    *p = val;   // make first value = val
+    // clean up old memory
+    std::destroy(elem, elem + sz);
+    alloc.deallocate(elem, static_cast<std::size_t>(space));
+
+    elem = p;   // transfer ownership
+    ++sz;
+}
+

@@ -13,6 +13,7 @@ Diagnostics:
   #  - "module_not_found"
     - "unknown_typename"
   ClangTidy:
+    FastCheckFilter: None
     Add:
       - "readability-*"
       - "modernize-*"

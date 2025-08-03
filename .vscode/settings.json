@@ -10,7 +10,8 @@
     "clangd.arguments": [
         "--background-index",
         "--compile-commands-dir=${workspaceFolder}",
-        "--enable-config"
+        "--enable-config",
+        "--header-insertion=never"
     ],
     "cmake.configureSettings": {
         "CMAKE_PREFIX_PATH": "/usr"
