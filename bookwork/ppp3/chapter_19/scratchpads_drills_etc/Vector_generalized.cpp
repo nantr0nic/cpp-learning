@@ -1,4 +1,5 @@
 //$ ----- Chapter 19 Vector stuff ----- //
+#include <algorithm>
 import std;
 
 template<class T> concept Element = true;
@@ -128,6 +129,11 @@ int main()
     std::println("{}", aVectorVector);
 
     std::println("Omg it does :) <3 !!!");
+
+    std::println("push_front() test");
+    some_words.push_front("this was pushed in front");
+
+    std::println("{}", some_words);
     
     return 0;
 }
@@ -353,24 +359,17 @@ void Vector<T, A>::push_back(const T& val)
     ++r.sz;
 }
 
-// "Try this" from page 828
+// refactored and improved!
 template<Element T, typename A>
 void Vector<T, A>::push_front(const T& val)
-//! An inefficient function! Written for a "Try This" exercise
-//$ I just realized I can check how much space there is and only
-//$ make a new allocation if there is no space. That'd be better.
-//$ I'll implement it tomorrow.
 {
-    /* I think the only way this is possible, since heap allocated and contiguous, 
-    * is to copy it and add val as the first element. */
-    T* p = r.alloc.allocate(r.sz + 1); // make new space + 1 for new element
-    std::uninitialized_move(r.elem, r.elem + r.sz, p + 1);         // copy old to new space but at 2nd spot
-    *p = val;   // make first value = val
-    // clean up old memory
-    std::destroy(r.elem, r.elem + r.sz);
-    r.alloc.deallocate(r.elem, static_cast<std::size_t>(r.space));
+    if (size() == capacity())
+    {
+        reserve(size() == 0 ? 8 : 2 * size());
+    }
 
-    r.elem = p;   // transfer ownership
+    std::move_backward(begin(), end(), end() + 1); // move elements
+    std::construct_at(begin(), val);    // add val at the beginning
     ++r.sz;
 }
 
