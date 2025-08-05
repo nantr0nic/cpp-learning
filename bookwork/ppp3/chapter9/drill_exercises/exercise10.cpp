@@ -32,7 +32,7 @@ Contacts::Contacts(string f, string l, string p, string e)
 
 int main()
 {
-    Contacts andy {"Andy", "Khazanovsky", "831-201-7075", "andy15givingup@gmail.com"};
+    Contacts andy {"Andy", "Khazanovsky", "831-201-7075", "andykhazanovsky@gmail.com"};
     Contacts jess {"Jess", "Smith", "215-555-9012", "jess.smith@email.com"};
     Contacts mike {"Mike", "Johnson", "614-555-5432", "mike.johnson@example.net"};
     Contacts sarah {"Sarah", "Williams", "415-555-0192", "sarah.williams@domain.org"};

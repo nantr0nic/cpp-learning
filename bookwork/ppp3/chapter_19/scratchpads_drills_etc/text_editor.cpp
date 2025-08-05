@@ -151,18 +151,47 @@ bool match(Text_iterator first, Text_iterator last, const std::string& s)
 Text_iterator find_txt(Text_iterator first, Text_iterator last, const std::string& s)
 // find s in [first:last)
 {
-    if (s.size() == 0)
+    if (s.empty())
     {
         return last;
     }
 
-    char first_char = s[0];
+    const char first_char = s[0];
 
     auto p = last;
     for (p = std::find(first, last, first_char);
-    !(p == last || match(p, last, s)); ++p)
+        !(p == last || match(p, last, s)); ++p)
     {
         // do nothing
     }
     return p;
+}
+
+// This will only work for words of the same length or shorter
+Text_iterator find_replace(Text_iterator first, Text_iterator last, 
+                           const std::string& find, const std::string& replace)
+{
+    auto word_front = find_txt(first, last, find); // pointer to the first letter of the found word
+
+    if (word_front == last) // if not found, return last
+    {
+        return last;
+    }
+
+    auto p = word_front;
+
+    for (std::size_t i = 0; i < find.length(); ++i)
+    {
+        if (i < replace.length())
+        {
+            *p = replace[i];
+        }
+        else
+        {
+            *p = ' '; // replace with white space if replace is shorter than find
+        }
+        ++p;
+    }
+        
+    return word_front;
 }
