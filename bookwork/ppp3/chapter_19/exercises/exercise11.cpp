@@ -17,26 +17,8 @@ std::vector<double> list_to_vec(std::list<int> list)
     }
     return temp;
 }
-
 template<typename T>
 void sort(std::vector<T>& vec)
-{
-    for (std::size_t i = 0; i < vec.size(); ++i)
-    {
-        for (std::size_t j = 0; j < vec.size(); ++j)
-        {
-            if (vec[j] > vec[i])
-            {
-                T temp = vec[j];
-                vec[j] = vec[i];
-                vec[i] = temp;
-            }
-        }
-    }
-}
-
-template<typename T>
-void bubble_sort(std::vector<T>& vec)
 {
     for (std::size_t i{0}; i < vec.size(); ++i)
     {
@@ -58,8 +40,8 @@ int main()
 
     std::println("New vec: {}", int_vec);
 
-    // std::sort(int_vec.begin(), int_vec.end());
-    bubble_sort(int_vec);
+    std::sort(int_vec.begin(), int_vec.end());
+    //sort(int_vec);
 
     std::println("New vec: {}", int_vec);
 
