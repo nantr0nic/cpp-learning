@@ -3,7 +3,6 @@
 *                                                                  *
 *Find the lexicographical last string in an unsorted vector<string>*
  *=================================================================*/
-#include <cctype>
 import std;
 
 void alpha_last(const std::vector<std::string>& vec)

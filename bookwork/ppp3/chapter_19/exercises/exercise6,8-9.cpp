@@ -3,7 +3,6 @@
 *                                                               *
 *Write a find-and-replace operation for Documents based on §19.5*
  *==============================================================*/
-
 import std;
 
 // We're going to use lists to hold lines, each line (demarcated with a newline)
@@ -40,8 +39,21 @@ public:
         return !(*this==other);
     }
 
-    auto get_ln() -> std::list<Line>::iterator { return ln; }
-    auto get_pos() -> Line::iterator           { return pos; }
+    Text_iterator insert_char(char c) {
+        pos = ln->insert(pos, c);
+        return *this;
+    }
+
+    Text_iterator erase_char() {
+        if (pos != ln->end())
+        {
+            pos = ln->erase(pos);
+        }
+        return *this;
+    }
+
+    // auto get_ln() -> std::list<Line>::iterator { return ln; }
+    // auto get_pos() -> Line::iterator           { return pos; }
 
 };
 
@@ -175,32 +187,91 @@ Text_iterator find_txt(Text_iterator first, Text_iterator last, const std::strin
     return p;
 }
 
-//$ -----  This is exercise 6  -----
-// This will only work for words of the same length or shorter
-Text_iterator find_replace(Text_iterator first, Text_iterator last, 
-                           const std::string& find, const std::string& replace)
+//$ ----- This is exercise 8 ----- //
+int count_char(Document& doc)
 {
-    auto word_front = find_txt(first, last, find); // pointer to the first letter of the found word
+    int count{};
 
-    if (word_front == last) // if not found, return last
+    for (const char& c : doc)
     {
-        return last;
+        ++count;
     }
 
-    auto p = word_front;
+    return count;
+}
 
-    for (std::size_t i = 0; i < find.length(); ++i)
+//$ ----- This is exercise 9 ----- //
+int count_words1(Document& doc)
+{
+    int count{};
+    bool in_word{false}; 
+    
+    for (const char& c : doc)
     {
-        if (i < replace.length())
+        if (std::isspace(c, std::locale{}))
         {
-            *p = replace[i];
+            if (in_word)
+            {
+                ++count;
+                in_word = false;
+            }
         }
         else
         {
-            *p = ' '; // replace with white space if replace is shorter than find
+            in_word = true;
         }
+    }
+    
+    if (in_word)
+    {
+        ++count;
+    }
+    
+    return count;
+}
+
+//$ ----- This is exercise 6  ----- //
+Text_iterator find_replace(Text_iterator first, Text_iterator last, 
+                          const std::string& find, const std::string& replace)
+{
+    auto word_front{ find_txt(first, last, find) };
+    
+    if (word_front == last)
+    {
+        return last;  // not found
+    }
+    
+    auto p{ word_front };
+    
+    // replace existing characters
+    const std::size_t min_length{std::min(find.length(), replace.length())};
+
+    for (std::size_t i = 0; i < min_length; ++i)
+    {
+        *p = replace[i];
         ++p;
     }
-        
+    
+    // if original word is longer than the word taking its place...
+    if (find.length() > replace.length())
+    {
+        // erase the extra characters 
+        for (std::size_t i = replace.length(); i < find.length(); ++i)
+        {
+            p.erase_char();  
+        }
+    }
+
+    // else if the original word is shorter than the word taking its place
+    else if (find.length() < replace.length())
+    {
+        // insert the extra characters
+        for (std::size_t i = find.length(); i < replace.length(); ++i)
+        {
+            p.insert_char(replace[i]);
+            ++p;  // move past the inserted character
+        }
+    }
+    
     return word_front;
 }
