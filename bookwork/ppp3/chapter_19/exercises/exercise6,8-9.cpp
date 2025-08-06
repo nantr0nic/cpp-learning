@@ -39,6 +39,7 @@ public:
         return !(*this==other);
     }
 
+    //$ ----- added these to keep my sanity ----- //
     Text_iterator insert_char(char c) {
         pos = ln->insert(pos, c);
         return *this;
@@ -51,7 +52,8 @@ public:
         }
         return *this;
     }
-
+    
+    //$ ------------------------------------------//
     // auto get_ln() -> std::list<Line>::iterator { return ln; }
     // auto get_pos() -> Line::iterator           { return pos; }
 
