@@ -1,0 +1,13 @@
+This is a file with some data.
+Here is a second line.
+This is a third line!
+---------------------
+
+This is a line added from a C++ program!
+A line from thread #2
+A line from thread #1
+A line from thread #3
+-=-=-= Thread 5 line =-=-=-
+A line from thread #1
+A line from thread #2
+A line from thread #3
