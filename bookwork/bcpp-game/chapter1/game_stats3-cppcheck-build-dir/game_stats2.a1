@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<analyzerinfo hash="15936538049589433788">
-        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;iostream&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;iostream&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
-            <location file="game_stats2.cpp" line="4" column="0"/>
-        </error>
-  <FileInfo check="CheckUnusedFunctions">
-    <functiondecl file="game_stats2.cpp" functionName="main" lineNumber="7"/>
-  </FileInfo>
-</analyzerinfo>

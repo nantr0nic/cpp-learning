@@ -1,7 +1,0 @@
-1.a1::1.cpp
-expensive_calculator.a1::expensive_calculator.cpp
-game_over2.a1::game_over2.cpp
-game_over3.a1::game_over3.cpp
-game_stats.a1::game_stats.cpp
-game_stats2.a1::game_stats2.cpp
-game_stats3.a1::game_stats3.cpp
