@@ -1,6 +1,5 @@
 -std=c++23
 -stdlib=libc++
--fmodule-file=std=std.pcm
 -Wno-reserved-identifier
 -Wno-reserved-module-identifier
 -Wall
@@ -8,7 +7,6 @@
 -Wnarrowing
 -Wconversion
 -pedantic
--O1
+-O3
 -fdiagnostics-color=always
--g
--fsanitize=thread
+-pthread
