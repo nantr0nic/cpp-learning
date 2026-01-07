@@ -50,7 +50,7 @@ zero latency.
 ```cpp
 std::unique_lock<std::mutex> lock(mut); // <== use unique_lock for cv
 // cv.wait(lock, predicate)
-// logic: if predicate is false, unlock mut and sleep.
+// logic: if predicate is TRUE, unlock mut and sleep.
 //        when notified, lock mut, check predicate again.
 cv.wait(lock, []{ return ready; }); 
 // Now we hold the lock and ready is true. Go!
