@@ -29,7 +29,7 @@ public:
                         // Now wait
 // on a ThreadPool being constructed, all the threads immediately go to sleep
 // at the wait instruction here
-// thread unlocks lock and sleeps if the predicate is FALSE
+// thread unlocks lock and sleeps if the predicate is TRUE
                         condition.wait(lock, [this] {
                             return stop_flag || !tasks.empty();
                         });
