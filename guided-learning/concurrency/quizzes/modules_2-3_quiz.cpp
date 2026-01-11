@@ -12,6 +12,8 @@ std::mutex g_mut;
 struct Account {
     int balance{1000};
     std::mutex mut;
+    // using uint8_t turns out to be less performative than a regular int
+    // (at least on 64-bit systems) but just using uint8_t for fun here
     uint8_t id{ 0001 };
 
     explicit Account(uint8_t id_no) : id(id_no) {};

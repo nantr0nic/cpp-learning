@@ -1,7 +1,39 @@
 // Quiz using the ThreadPool class we built
 #include "threadpool.hpp"
+#include <print>
+#include <thread>
+#include <vector>
+#include <future>
 
 int main() {
+    ThreadPool pool(3);
+    
+    // Question 1
+    {
+        for (int i = 0; i < 10; ++i) {
+            pool.enqueue([i] {
+                std::println("Hello from Task #{} from Thread ({})", i, std::this_thread::get_id());
+            });
+        }
+    }
+    
+    // Question 2
+    {
+        // This promise/future setup is necessary because the ThreadPool class isn't templatized
+        // and enqueue only accepts std::function<void()>, it can't return an int
+        std::vector<std::future<int>> future_vec;
+        for (int i = 0; i < 10; ++i) {
+            auto promise = std::make_shared<std::promise<int>>();
+            future_vec.push_back(promise->get_future());
+            pool.enqueue([i, promise]() {
+                const int res = i * i;
+                promise->set_value(res);
+            });
+        }
+        for (auto& future : future_vec) {
+            std::println("Element: {}", future.get());
+        }
+    }
     
     return 0;
 }

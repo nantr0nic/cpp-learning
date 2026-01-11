@@ -7,7 +7,7 @@ CompileFlags:
     - "-Wno-reserved-module-identifier"
 Diagnostics:
   Suppress:
-  #  - "module_not_found"
+    #  - "module_not_found"
     - "unknown_typename"
   ClangTidy:
     FastCheckFilter: None
@@ -18,9 +18,9 @@ Diagnostics:
       - "performance-for-range-copy"
       - "readability-const-return-type"
       - "cppcoreguidelines-init-variables"
-      - "misc-const-correctness"              
-      - "readability-container-size-empty"    
-      - "performance-unnecessary-copy-initialization"  
+      # - "misc-const-correctness"
+      # - "readability-container-size-empty"
+      - "performance-unnecessary-copy-initialization"
     Remove:
       - "readability-redundant-access-specifiers"
       - "modernize-use-nodiscard"
