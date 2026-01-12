@@ -8,7 +8,6 @@
 #include <condition_variable>
 #include <thread>
 #include <fstream>
-#include <print>
 
 AsyncLogger::AsyncLogger(const std::string& filename) {
     log_file_stream.open(filename, std::ios::app);

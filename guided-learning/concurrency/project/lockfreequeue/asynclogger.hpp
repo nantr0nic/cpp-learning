@@ -1,9 +1,10 @@
+#include "lock_free_queue.hpp"
+
 #include <string>
-#include <queue>
-#include <mutex>
 #include <condition_variable>
 #include <thread>
 #include <fstream>
+#include <atomic>
 
 class AsyncLogger {
 public:
@@ -17,9 +18,10 @@ private:
     void process_logs();
 
     std::ofstream log_file_stream;
-    std::queue<std::string> log_queue;
-    std::mutex mut;
+    LockFreeQueue log_queue;
+    std::atomic_flag spin_lock = ATOMIC_FLAG_INIT;
+    std::mutex signal_mut;
     std::condition_variable c_v;
-    bool stop_flag{ false };
+    std::atomic<bool> stop_flag{ false };
     std::jthread log_worker;
 };
