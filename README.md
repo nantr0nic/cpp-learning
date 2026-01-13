@@ -3,7 +3,7 @@
 My C++ Learning Adventure!
 
 ### 2026
-Starting this year with learning about threading/concurrency. Trying out Gemini's "Guided Learning" program.
+Starting this year with learning about threading/concurrency. Trying out Gemini's ["Guided Learning" program](https://github.com/nantr0nic/cpp-learning/tree/main/concurrency/guided-learning). Working on concurrency exercises from [a blog post](https://medium.com/@krishnacse20/c-multithreading-practice-programs-ea8f8a1be446) -- they are [here](https://github.com/nantr0nic/cpp-learning/tree/main/concurrency/krishna-gupta-exercises)
 
 
 ### 2025
