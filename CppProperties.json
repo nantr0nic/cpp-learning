@@ -15,7 +15,9 @@
         "UNICODE",
         "_UNICODE"
       ],
-      "intelliSenseMode": "windows-msvc-x86"
+      "intelliSenseMode": "windows-msvc-x86",
+      "compilerSwitches": "/std:c++23",
+      "cppStandard":  "c++23"
     }
   ]
 }
